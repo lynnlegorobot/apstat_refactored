@@ -1484,6 +1484,9 @@ Thank you for helping me prepare for my AP Statistics exam!`;
     },
 ];
         
+        // Initialize state variable to track the currently active unit
+        let currentSelectedUnitId = '1'; // Default to Unit 1 on load
+        
         // Function to create a topic card for display in the Study Materials tab
         function createTopicCard(topic, forNextTopic = false) {
             // Check if this is a capstone topic and if all previous topics are completed
@@ -2395,35 +2398,50 @@ Thank you for helping me prepare for my AP Statistics exam!`;
         
         // Function to update the progress bar
         function updateProgressBar() {
-            // Count total individual videos and quizzes
-            let totalItems = 0;
-            let completedItems = 0;
-            
-            pdfFiles.forEach(topic => {
-                // Count videos
-                topic.videos.forEach(video => {
-                    totalItems++;
-                    if (video.completed) completedItems++;
-                });
-                
-                // Count quizzes
-                topic.quizzes.forEach(quiz => {
-                    totalItems++;
-                    if (quiz.completed) completedItems++;
-                });
-            });
-            
-            const progressPercentage = totalItems > 0 ? (completedItems / totalItems) * 100 : 0;
-            
+            // Update progress bar based on completed topics
             const progressBar = document.getElementById('progress-bar');
+            if (!progressBar) return;
+            
+            // Count completed topics and total topics excluding capstone
+            const nonCapstonePdfs = pdfFiles.filter(p => !p.isCapstone);
+            const completedTopics = nonCapstonePdfs.filter(topic => 
+                topic.videos.every(v => v.completed) && topic.quizzes.every(q => q.completed)
+            ).length;
+            const totalTopics = nonCapstonePdfs.length;
+            
+            // Calculate percentage
+            const progressPercentage = Math.round((completedTopics / totalTopics) * 100);
+            
+            // Update width and text
             progressBar.style.width = `${progressPercentage}%`;
             
-            // Add text to the progress bar if it's big enough
-            if (progressPercentage > 10) {
-                progressBar.textContent = `${Math.round(progressPercentage)}% Complete (${completedItems}/${totalItems} items)`;
+            // Decide on color based on progress
+            if (progressPercentage < 30) {
+                progressBar.classList.add('bg-red-500');
+                progressBar.classList.remove('bg-yellow-500', 'bg-green-500');
+            } else if (progressPercentage < 70) {
+                progressBar.classList.add('bg-yellow-500');
+                progressBar.classList.remove('bg-red-500', 'bg-green-500');
             } else {
-                progressBar.textContent = '';
+                progressBar.classList.add('bg-green-500');
+                progressBar.classList.remove('bg-red-500', 'bg-yellow-500');
             }
+            
+            // Update text
+            document.getElementById('progress-text').textContent = `${completedTopics} of ${totalTopics} topics completed (${progressPercentage}%)`;
+        }
+        
+        // Centralize Topic Data Access: Helper function to get topics for the current selected unit
+        function getSelectedUnitTopics() {
+            // Construct the expected unitId format (e.g., 'unit1', 'unit2')
+            const fullUnitId = 'unit' + currentSelectedUnitId;
+            const unitData = ALL_UNITS_DATA.find(unit => unit.unitId === fullUnitId);
+            // Handle potential errors if unit data is not found or invalid
+            if (!unitData || !Array.isArray(unitData.topics)) {
+                console.error(`Topics not found or invalid for unitId: ${fullUnitId}`);
+                return []; // Return empty array to prevent crashes
+            }
+            return unitData.topics; // Return the topics array for the selected unit
         }
         
         // Function to save topic progress to local storage
@@ -4291,6 +4309,18 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                 loadingEl.style.display = 'none';
             }
         }
+        
+        // Handle document visibility change to check/update bookmark in real-time
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                if (currentUserId) {
+                    displayGlobalBookmarkIndicator();
+                }
+            }
+        });
+        
+        // Define unit ID for this page
+        const UNIT_ID = '1';
     </script>
     
     <!-- React Component -->
