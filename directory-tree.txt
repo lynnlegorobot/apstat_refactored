@@ -1,0 +1,232 @@
+LPS+ColsonR@LPS-5CD32865BG MINGW64 ~/Downloads/apstatSY2526 (main)
+$ ls -lhR
+.:
+total 293K
+-rw-r--r-- 1 LPS+ColsonR 4096  15K May  6 08:09 directory-tree.txt
+-rw-r--r-- 1 LPS+ColsonR 4096 245K Apr 11 08:48 index.html
+drwxr-xr-x 1 LPS+ColsonR 4096    0 May  6 08:11 js/
+-rw-r--r-- 1 LPS+ColsonR 4096  191 May  5 20:15 links.txt
+drwxr-xr-x 1 LPS+ColsonR 4096    0 May  6 08:11 pdfs/
+-rw-r--r-- 1 LPS+ColsonR 4096  22K May  5 20:16 syllabus.tex
+
+./js:
+total 92K
+-rw-r--r-- 1 LPS+ColsonR 4096 92K Apr 10 10:51 allUnitsData.js
+
+./pdfs:
+total 408K
+-rw-r--r-- 1 LPS+ColsonR 4096 235K Apr  8 21:04 UnitWeights.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 108K May  5 19:49 syllabus_apstat.pdf
+drwxr-xr-x 1 LPS+ColsonR 4096    0 May  5 20:18 unit1/
+drwxr-xr-x 1 LPS+ColsonR 4096    0 May  5 20:18 unit2/
+drwxr-xr-x 1 LPS+ColsonR 4096    0 May  5 20:18 unit3/
+drwxr-xr-x 1 LPS+ColsonR 4096    0 May  5 20:19 unit4/
+drwxr-xr-x 1 LPS+ColsonR 4096    0 May  5 20:19 unit5/
+drwxr-xr-x 1 LPS+ColsonR 4096    0 May  5 20:19 unit6/
+drwxr-xr-x 1 LPS+ColsonR 4096    0 May  5 20:20 unit7/
+drwxr-xr-x 1 LPS+ColsonR 4096    0 May  5 20:20 unit8/
+drwxr-xr-x 1 LPS+ColsonR 4096    0 May  5 20:20 unit9/
+
+./pdfs/unit1:
+total 4.5M
+-rw-r--r-- 1 LPS+ColsonR 4096 170K Apr  8 21:04 unit1_pc_frq_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  90K Apr  8 21:04 unit1_pc_frq_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 636K Apr  8 21:04 unit1_pc_mcq_parta_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 583K Apr  8 21:04 unit1_pc_mcq_partb_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 247K Apr  8 21:04 unit1_section1.10_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 103K Apr  8 21:04 unit1_section1.10_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  71K Apr  8 21:04 unit1_section1.2_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  60K Apr  8 21:04 unit1_section1.2_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 104K Apr  8 21:04 unit1_section1.3_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  69K Apr  8 21:04 unit1_section1.3_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 321K Apr  8 21:04 unit1_section1.4_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 296K Apr  8 21:04 unit1_section1.4_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  67K Apr  8 21:04 unit1_section1.5_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  57K Apr  8 21:04 unit1_section1.5_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 130K Apr  8 21:04 unit1_section1.6_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 127K Apr  8 21:04 unit1_section1.6_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 341K Apr  8 21:04 unit1_section1.7_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 245K Apr  8 21:04 unit1_section1.7_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 138K Apr  8 21:04 unit1_section1.8_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 128K Apr  8 21:04 unit1_section1.8_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 269K Apr  8 21:04 unit1_section1.9_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 253K Apr  8 21:04 unit1_section1.9_quiz.pdf
+
+./pdfs/unit2:
+total 5.3M
+-rw-r--r-- 1 LPS+ColsonR 4096 423K Apr  8 21:03 unit2_pc_frq_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 220K Apr  8 21:03 unit2_pc_frq_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 779K Apr  8 21:03 unit2_pc_mcq_parta_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 975K Apr  8 21:03 unit2_pc_mcq_partb_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 187K Apr  8 21:03 unit2_section2.2_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 171K Apr  8 21:03 unit2_section2.2_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 288K Apr  8 21:03 unit2_section2.3_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 214K Apr  8 21:03 unit2_section2.3_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 136K Apr  8 21:03 unit2_section2.4_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 133K Apr  8 21:03 unit2_section2.4_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  98K Apr  8 21:03 unit2_section2.5_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  79K Apr  8 21:03 unit2_section2.5_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  85K Apr  8 21:03 unit2_section2.6_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  70K Apr  8 21:03 unit2_section2.6_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 168K Apr  8 21:03 unit2_section2.7_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 156K Apr  8 21:03 unit2_section2.7_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 124K Apr  8 21:03 unit2_section2.8_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  99K Apr  8 21:03 unit2_section2.8_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 556K Apr  8 21:03 unit2_section2.9_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 410K Apr  8 21:03 unit2_section2.9_quiz.pdf
+
+./pdfs/unit3:
+total 1.8M
+-rw-r--r-- 1 LPS+ColsonR 4096 167K Apr  8 21:03 unit3_pc_frq_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  97K Apr  8 21:03 unit3_pc_frq_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 107K Apr  8 21:03 unit3_pc_mcq_parta_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 119K Apr  8 21:03 unit3_pc_mcq_partb_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  82K Apr  8 21:03 unit3_section3.2_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  69K Apr  8 21:03 unit3_section3.2_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 129K Apr  8 21:03 unit3_section3.3_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 106K Apr  8 21:03 unit3_section3.3_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  67K Apr  8 21:03 unit3_section3.4_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  58K Apr  8 21:03 unit3_section3.4_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 258K Apr  8 21:03 unit3_section3.5_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 225K Apr  8 21:03 unit3_section3.5_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  98K Apr  8 21:03 unit3_section3.6_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  89K Apr  8 21:03 unit3_section3.6_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  67K Apr  8 21:03 unit3_section3.7_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  57K Apr  8 21:03 unit3_section3.7_quiz.pdf
+
+./pdfs/unit4:
+total 5.6M
+-rw-r--r-- 1 LPS+ColsonR 4096 285K Apr  8 21:03 unit4_pc_frq_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  82K Apr  8 21:03 unit4_pc_frq_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 418K Apr  8 21:03 unit4_pc_mcq_parta_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 709K Apr  8 21:03 unit4_pc_mcq_partb_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 492K Apr  8 21:03 unit4_pc_mcq_partc_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 243K Apr  8 21:03 unit4_section4.10_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 204K Apr  8 21:03 unit4_section4.10_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 148K Apr  8 21:03 unit4_section4.11_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  76K Apr  8 21:03 unit4_section4.11_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 263K Apr  8 21:03 unit4_section4.12_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 146K Apr  8 21:03 unit4_section4.12_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 143K Apr  8 21:03 unit4_section4.2_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 126K Apr  8 21:03 unit4_section4.2_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 113K Apr  8 21:03 unit4_section4.3_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096  75K Apr  8 21:03 unit4_section4.3_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 135K Apr  8 21:03 unit4_section4.4_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 132K Apr  8 21:03 unit4_section4.4_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 176K Apr  8 21:03 unit4_section4.5_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 121K Apr  8 21:03 unit4_section4.5_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 282K Apr  8 21:03 unit4_section4.6_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 134K Apr  8 21:03 unit4_section4.6_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 129K Apr  8 21:03 unit4_section4.7_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 121K Apr  8 21:03 unit4_section4.7_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 176K Apr  8 21:03 unit4_section4.8_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 110K Apr  8 21:03 unit4_section4.8_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 499K Apr 10 10:34 unit4_section4.9_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 136K Apr  8 21:03 unit4_section4.9_quiz.pdf
+
+./pdfs/unit5:
+total 5.9M
+-rw-r--r-- 1 LPS+ColsonR 4096 682K Apr  8 21:03 unit5_pc_frq_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 328K Apr  8 21:03 unit5_pc_frq_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 540K Apr  8 21:03 unit5_pc_mcq_parta_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 494K Apr  8 21:03 unit5_pc_mcq_partb_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 306K Apr  8 21:03 unit5_pc_mcq_partc_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 414K Apr  8 21:03 unit5_section5.2_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 260K Apr  8 21:03 unit5_section5.2_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 235K Apr  8 21:03 unit5_section5.3_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 224K Apr  8 21:03 unit5_section5.3_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 169K Apr  8 21:03 unit5_section5.4_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 145K Apr  8 21:03 unit5_section5.4_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 283K Apr  8 21:03 unit5_section5.5_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 196K Apr  8 21:03 unit5_section5.5_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 548K Apr  8 21:03 unit5_section5.6_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 249K Apr  8 21:03 unit5_section5.6_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 147K Apr  8 21:03 unit5_section5.7_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 100K Apr  8 21:03 unit5_section5.7_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 383K Apr  8 21:03 unit5_section5.8_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 293K Apr  8 21:03 unit5_section5.8_quiz.pdf
+
+./pdfs/unit6:
+total 7.8M
+-rw-r--r-- 1 LPS+ColsonR 4096 400K Apr  8 21:03 unit6_pc_frq_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 189K Apr  8 21:03 unit6_pc_frq_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 265K Apr  8 21:03 unit6_pc_mcq_parta_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 437K Apr  8 21:03 unit6_pc_mcq_partb_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 365K Apr  8 21:03 unit6_pc_mcq_partc_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 760K Apr  8 21:03 unit6_pc_mcq_partd_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 365K Apr  8 21:03 unit6_section6.10_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 264K Apr  8 21:03 unit6_section6.10_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 630K Apr  8 21:03 unit6_section6.11_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 350K Apr  8 21:03 unit6_section6.11_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 255K Apr  8 21:03 unit6_section6.2_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 178K Apr  8 21:03 unit6_section6.2_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 506K Apr  8 21:03 unit6_section6.3_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 285K Apr  8 21:03 unit6_section6.3_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 268K Apr  8 21:03 unit6_section6.4_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 232K Apr  8 21:03 unit6_section6.4_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 246K Apr  8 21:03 unit6_section6.5_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 177K Apr  8 21:03 unit6_section6.5_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 119K Apr  8 21:03 unit6_section6.6_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 101K Apr  8 21:03 unit6_section6.6_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 271K Apr  8 21:03 unit6_section6.7_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 115K Apr  8 21:03 unit6_section6.7_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 416K Apr  8 21:03 unit6_section6.8_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 303K Apr  8 21:03 unit6_section6.8_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 211K Apr  8 21:03 unit6_section6.9_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 161K Apr  8 21:03 unit6_section6.9_quiz.pdf
+
+./pdfs/unit7:
+total 6.7M
+-rw-r--r-- 1 LPS+ColsonR 4096 576K Apr  8 21:03 unit7_pc_frq_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 185K Apr  8 21:03 unit7_pc_frq_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 279K Apr  8 21:03 unit7_pc_mcq_parta_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 518K Apr  8 21:03 unit7_pc_mcq_partb_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 595K Apr  8 21:03 unit7_pc_mcq_partc_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 283K Apr  8 21:03 unit7_section7.2_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 218K Apr  8 21:03 unit7_section7.2_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 213K Apr  8 21:03 unit7_section7.3_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 194K Apr  8 21:03 unit7_section7.3_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 246K Apr  8 21:03 unit7_section7.4_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 220K Apr  8 21:03 unit7_section7.4_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 372K Apr  8 21:03 unit7_section7.5_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 233K Apr  8 21:03 unit7_section7.5_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 327K Apr  8 21:03 unit7_section7.6_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 249K Apr  8 21:03 unit7_section7.6_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 261K Apr  8 21:03 unit7_section7.7_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 178K Apr  8 21:03 unit7_section7.7_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 478K Apr  8 21:03 unit7_section7.8_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 365K Apr  8 21:03 unit7_section7.8_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 408K Apr  8 21:03 unit7_section7.9_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 334K Apr  8 21:03 unit7_section7.9_quiz.pdf
+
+./pdfs/unit8:
+total 5.5M
+-rw-r--r-- 1 LPS+ColsonR 4096  89K Apr  8 21:03 unit8_pc_frq.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 186K Apr  8 21:03 unit8_pc_frq_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 583K Apr  8 21:03 unit8_pc_mcq_partA_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 563K Apr  8 21:03 unit8_pc_mcq_partB_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 777K Apr  8 21:03 unit8_section8.2_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 715K Apr  8 21:03 unit8_section8.2_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 808K Apr  8 21:03 unit8_section8.3_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 371K Apr  8 21:03 unit8_section8.3_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 188K Apr  8 21:03 unit8_section8.4_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 128K Apr  8 21:03 unit8_section8.4_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 173K Apr  8 21:03 unit8_section8.5_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 155K Apr  8 21:03 unit8_section8.5_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 549K Apr  8 21:03 unit8_section8.6_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 233K Apr  8 21:03 unit8_section8.6_quiz.pdf
+
+./pdfs/unit9:
+total 4.4M
+-rw-r--r-- 1 LPS+ColsonR 4096 141K Apr  2 19:13 unit9_pc_frq.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 298K Apr  2 19:13 unit9_pc_frq_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 346K Apr  2 19:13 unit9_pc_mcq_partA_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 675K Apr  2 19:13 unit9_pc_mcq_partB_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 322K Apr  2 19:13 unit9_section9.2_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 262K Apr  2 19:13 unit9_section9.2_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 351K Apr  2 19:13 unit9_section9.3_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 268K Apr  2 19:13 unit9_section9.3_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 557K Apr  2 19:13 unit9_section9.4_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 505K Apr  2 19:13 unit9_section9.4_quiz.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 403K Apr  2 19:13 unit9_section9.5_answers.pdf
+-rw-r--r-- 1 LPS+ColsonR 4096 309K Apr  2 19:13 unit9_section9.5_quiz.pdf
