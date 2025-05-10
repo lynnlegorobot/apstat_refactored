@@ -81,6 +81,12 @@
              -moz-user-select: none; /* Firefox */
              -ms-user-select: none; /* IE10+ */
          }
+        .unit-tab.active-unit-tab {
+            background-color: #e0f2fe; /* Light blue background */
+            border-color: #3b82f6;     /* Blue border */
+            color: #1e40af;            /* Dark blue text */
+            font-weight: bold;
+        }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
@@ -363,7 +369,7 @@ async function updateQuotaMetVisualIndicator() {
     }
     console.log('GH_DEBUG (VisualIndicator): EXITING function.');
 }
-let currentSelectedUnitId = '1'; // Default to Unit 1 on load
+
         // Supabase initialization
         const SUPABASE_URL = 'https://rmqetzxoqupnggltuzqf.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtcWV0enhvcXVwbmdnbHR1enFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3MjM2NzAsImV4cCI6MjA1OTI5OTY3MH0.9I56L1kC_4JJr_u9LuDgQ2ZV5C0y_-yic828UeCiuUk';
@@ -1205,6 +1211,9 @@ Thank you for helping me prepare for my AP Statistics exam!`;
         // Define the PDF files and organize them by topic
         ;
         
+        // Initialize state variable to track the currently active unit
+        let currentSelectedUnitId = '1'; // Default to Unit 1 on load
+        
         // Function to create a topic card for display in the Study Materials tab
         function createTopicCard(topic, forNextTopic = false) {
             // Check if this is a capstone topic and if all previous topics are completed
@@ -1986,8 +1995,8 @@ Thank you for helping me prepare for my AP Statistics exam!`;
         }
         
         // Function to mark all videos and quizzes in a topic as completed
-                // Function to mark all videos and quizzes in a topic as completed
-                async function markTopicAsCompleted(topicId) {
+        // Function to mark all videos and quizzes in a topic as completed
+        async function markTopicAsCompleted(topicId) {
             const topic = pdfFiles.find(t => t.id === topicId);
             if (!topic) return;
 
@@ -2192,48 +2201,48 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                 const progress = JSON.parse(savedProgress);
                 
                 // Update the pdfFiles array with saved progress
-                progress.forEach(savedTopic => {
+                    progress.forEach(savedTopic => {
                     const topic = pdfFiles.find(t => t.id === savedTopic.id);
-                    if (topic) {
-                        // A topic is considered completed if all its videos and quizzes are completed
-                        // or if it was previously marked as completed in the old structure
-                        topic.current = savedTopic.current;
-                        
-                        // Update video completion statuses if present
-                        if (savedTopic.videos && Array.isArray(savedTopic.videos)) {
-                            savedTopic.videos.forEach((savedVideo, index) => {
-                                // Match videos by URL if possible, otherwise by index
-                                const videoMatch = topic.videos.find(v => v.url === savedVideo.url) || 
-                                                 (index < topic.videos.length ? topic.videos[index] : null);
-                                if (videoMatch) {
-                                    videoMatch.completed = savedVideo.completed;
-                                    videoMatch.completionDate = savedVideo.completionDate;
-                                }
-                            });
-                        }
-                        
-                        // Update quiz completion statuses if present
-                        if (savedTopic.quizzes && Array.isArray(savedTopic.quizzes)) {
-                            savedTopic.quizzes.forEach((savedQuiz, index) => {
-                                // Match quizzes by ID if possible, otherwise by index
-                                const quizMatch = topic.quizzes.find(q => q.quizId === savedQuiz.quizId) || 
-                                                (index < topic.quizzes.length ? topic.quizzes[index] : null);
-                                if (quizMatch) {
-                                    quizMatch.completed = savedQuiz.completed;
-                                    quizMatch.completionDate = savedQuiz.completionDate;
-                                }
-                            });
-                        }
-                        
-                        // Handle legacy format (before restructuring)
-                        if (typeof savedTopic.completed === 'boolean') {
-                            if (savedTopic.completed) {
-                                // Mark all videos and quizzes as completed for this topic
-                                topic.videos.forEach(video => {
-                                    video.completed = true;
-                                    video.completionDate = video.completionDate || new Date().toISOString();
+                        if (topic) {
+                            // A topic is considered completed if all its videos and quizzes are completed
+                            // or if it was previously marked as completed in the old structure
+                            topic.current = savedTopic.current;
+                            
+                            // Update video completion statuses if present
+                            if (savedTopic.videos && Array.isArray(savedTopic.videos)) {
+                                savedTopic.videos.forEach((savedVideo, index) => {
+                                    // Match videos by URL if possible, otherwise by index
+                                    const videoMatch = topic.videos.find(v => v.url === savedVideo.url) || 
+                                                     (index < topic.videos.length ? topic.videos[index] : null);
+                                    if (videoMatch) {
+                                        videoMatch.completed = savedVideo.completed;
+                                        videoMatch.completionDate = savedVideo.completionDate;
+                                    }
                                 });
-                                topic.quizzes.forEach(quiz => {
+                            }
+                            
+                            // Update quiz completion statuses if present
+                            if (savedTopic.quizzes && Array.isArray(savedTopic.quizzes)) {
+                                savedTopic.quizzes.forEach((savedQuiz, index) => {
+                                    // Match quizzes by ID if possible, otherwise by index
+                                    const quizMatch = topic.quizzes.find(q => q.quizId === savedQuiz.quizId) || 
+                                                      (index < topic.quizzes.length ? topic.quizzes[index] : null);
+                                    if (quizMatch) {
+                                        quizMatch.completed = savedQuiz.completed;
+                                        quizMatch.completionDate = savedQuiz.completionDate;
+                                    }
+                                });
+                            }
+                            
+                            // Handle legacy format (before restructuring)
+                            if (typeof savedTopic.completed === 'boolean') {
+                                if (savedTopic.completed) {
+                                    // Mark all videos and quizzes as completed for this topic
+                                    topic.videos.forEach(video => {
+                                        video.completed = true;
+                                        video.completionDate = video.completionDate || new Date().toISOString();
+                                    });
+                                    topic.quizzes.forEach(quiz => {
                                     quiz.completed = true;
                                     quiz.completionDate = quiz.completionDate || new Date().toISOString();
                                 });
@@ -4218,5 +4227,19 @@ Thank you for helping me prepare for my AP Statistics exam!`;
         </a>
     </div>
     <!-- End QR Code Section -->
+
+    <!-- Unit Navigation -->
+    <div id="unit-navigation" class="flex flex-wrap mb-4 border-b border-gray-300 pb-2">
+        <span class="mr-4 font-semibold">Select Unit:</span>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="1">Unit 1</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="2">Unit 2</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="3">Unit 3</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="4">Unit 4</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="5">Unit 5</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="6">Unit 6</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="7">Unit 7</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="8">Unit 8</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="9">Unit 9</button>
+    </div>
 </body>
 </html> 
