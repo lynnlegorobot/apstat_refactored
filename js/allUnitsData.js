@@ -2,7 +2,9 @@
 
 const ALL_UNITS_DATA = [
   {
-    unitId: 'unit1', // Unique identifier for the unit
+    unitId: 'unit1',
+    displayName: "Unit 1: Exploring One-Variable Data", // Added/Updated
+        examWeight: "15-23%",     // Unique identifier for the unit
     // This 'topics' array IS the 'pdfFiles' array definition from Unit 1's index.html
     // Ensure it reflects the granular structure with nested 'videos' and 'quizzes' arrays.
     topics: [
@@ -288,7 +290,9 @@ const ALL_UNITS_DATA = [
     ]
   },
   {
-    unitId: 'unit2', // Unique identifier for Unit 2
+    unitId: 'unit2',
+    displayName: "Unit 2: Exploring Two-Variable Data",
+    examWeight: "5-7%", // Unique identifier for Unit 2
     // This 'topics' array IS the 'pdfFiles' array definition from Unit 2's index.html
     topics: [
        // --- PASTE Unit 2's pdfFiles ARRAY CONTENT HERE ---
@@ -569,6 +573,8 @@ const ALL_UNITS_DATA = [
   },
   {
     unitId: 'unit3',
+    displayName: "Unit 3: Collecting Data",
+    examWeight: "12-15%",
     topics: [
       // --- PASTE Unit 3's pdfFiles ARRAY CONTENT HERE ---
       {
@@ -784,6 +790,8 @@ const ALL_UNITS_DATA = [
   },
   {
     unitId: 'unit4',
+    displayName: "Unit 4: Probability, Random Variables, and Probability Distributions",
+        examWeight: "10-20%",
     topics: [
       {
         id: "4-1",
@@ -1151,6 +1159,8 @@ const ALL_UNITS_DATA = [
   },
   {
     unitId: 'unit5',
+    displayName: "Unit 5: Sampling Distributions",
+    examWeight: "7-12%",
   topics: [
     {
       id: "5-1",
@@ -1413,6 +1423,8 @@ const ALL_UNITS_DATA = [
   },
   {
     unitId: 'unit6',
+    displayName: "Unit 6: Inference for Categorical Data: Proportions",
+        examWeight: "12-15%",
     topics: [
         {
             id: "6-1",
@@ -1786,6 +1798,8 @@ const ALL_UNITS_DATA = [
   },
   {
     unitId: 'unit7',
+    displayName: "Unit 7: Inference for Quantitative Data: Means",
+    examWeight: "10-18%",
     topics: [
       {
         id: "7-1",
@@ -2121,6 +2135,8 @@ const ALL_UNITS_DATA = [
   },
   {
     unitId: 'unit8',
+    displayName: "Unit 8: Inference for Categorical Data: Chi-Square",
+    examWeight: "2-5%",
     topics: [
       {
         id: "8-1",
@@ -2344,6 +2360,8 @@ const ALL_UNITS_DATA = [
   },
   {
     unitId: 'unit9',
+    displayName: "Unit 9: Inference for Quantitative Data: Slopes",
+        examWeight: "2-5%",
     topics: [
       {
         id: "9-1",
