@@ -1316,7 +1316,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                             <button
                                 class="p-1 ml-2 text-gray-400 hover:text-blue-600 bookmark-toggle-btn flex-shrink-0"
                                 title="Set as Bookmark"
-                                data-bookmark-unit="${UNIT_ID}"
+                                data-bookmark-unit="${CURRENTSELECTEDUNITID}"
                                 data-bookmark-item="${topic.id}-${quiz.quizId}-q"
                                 data-bookmark-type="quiz"
                                 data-bookmark-name="${topic.name} - ${linkText}"
@@ -1359,7 +1359,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                                 <button
                                     class="p-1 ml-2 text-gray-400 hover:text-blue-600 bookmark-toggle-btn flex-shrink-0"
                                     title="Set as Bookmark"
-                                    data-bookmark-unit="${UNIT_ID}"
+                                    data-bookmark-unit="${CURRENTSELECTEDUNITID}"
                                     data-bookmark-item="${topic.id}-${quiz.quizId}-a"
                                     data-bookmark-type="quiz"
                                     data-bookmark-name="${topic.name} - ${answerTitle}"
@@ -1427,7 +1427,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                         <button
                             class="p-1 ml-2 text-gray-400 hover:text-blue-600 bookmark-toggle-btn flex-shrink-0"
                             title="Set as Bookmark"
-                            data-bookmark-unit="${UNIT_ID}"
+                            data-bookmark-unit="${CURRENTSELECTEDUNITID}"
                             data-bookmark-item="${topic.id}-video-${index}"
                             data-bookmark-type="video"
                             data-bookmark-name="${topic.name} - Video${videoNumber}"
@@ -1466,7 +1466,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                                 <button
                                     class="p-1 ml-2 text-gray-400 hover:text-blue-600 bookmark-toggle-btn flex-shrink-0"
                                     title="Set as Bookmark"
-                                    data-bookmark-unit="${UNIT_ID}"
+                                    data-bookmark-unit="${CURRENTSELECTEDUNITID}"
                                     data-bookmark-item="${topic.id}-video-${index}-alt"
                                     data-bookmark-type="video"
                                     data-bookmark-name="${topic.name} - Video${videoNumber} (Google Drive)"
@@ -1785,11 +1785,11 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             if (currentUserId) {
                 if (isCompleted) { // ADD THIS CHECK
                     console.log('DEBUG: Item marked complete, attempting to save to Supabase...');
-                    saveCompletionToSupabase('video', videoUrl, UNIT_ID); // Pass correct itemType/identifier
+                    saveCompletionToSupabase('video', videoUrl, CURRENTSELECTEDUNITID); // Pass correct itemType/identifier
                 } else {
                     // Item marked incomplete - Call delete function
                     console.log('DEBUG: Item marked incomplete. Attempting to delete from Supabase...');
-                    deleteCompletionFromSupabase('video', videoUrl, UNIT_ID);
+                    deleteCompletionFromSupabase('video', videoUrl, CURRENTSELECTEDUNITID);
                 }
             }
             
@@ -1825,11 +1825,11 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             if (currentUserId) {
                 if (isCompleted) { // ADD THIS CHECK
                     console.log('DEBUG: Item marked complete, attempting to save to Supabase...');
-                    saveCompletionToSupabase('quiz', quizId, UNIT_ID); // Pass correct itemType/identifier
+                    saveCompletionToSupabase('quiz', quizId, CURRENTSELECTEDUNITID); // Pass correct itemType/identifier
                 } else {
                     // Item marked incomplete - Call delete function
                     console.log('DEBUG: Item marked incomplete. Attempting to delete from Supabase...');
-                    deleteCompletionFromSupabase('quiz', quizId, UNIT_ID);
+                    deleteCompletionFromSupabase('quiz', quizId, CURRENTSELECTEDUNITID);
                 }
             }
             
@@ -2064,7 +2064,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                  console.log(`DEBUG (markTopic): Attempting to save ${itemsToSave.length} items to Supabase for user ${currentUserId}.`);
                 // Use Promise.allSettled to attempt all saves even if some fail
                 Promise.allSettled(itemsToSave.map(item =>
-                    saveCompletionToSupabase(item.type, item.identifier, UNIT_ID)
+                    saveCompletionToSupabase(item.type, item.identifier, CURRENTSELECTEDUNITID)
                 )).then(async results => {
                     // Log results (optional)
                     results.forEach((result, index) => {
@@ -2645,7 +2645,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                                 <button
                                     class="p-1 ml-2 text-gray-400 hover:text-blue-600 bookmark-toggle-btn flex-shrink-0"
                                     title="Set as Bookmark"
-                                    data-bookmark-unit="${UNIT_ID}"
+                                    data-bookmark-unit="${CURRENTSELECTEDUNITID}"
                                     data-bookmark-item="${currentTopic.id}-${quiz.quizId}-q"
                                     data-bookmark-type="quiz"
                                     data-bookmark-name="${currentTopic.name} - Questions PDF"
@@ -2686,7 +2686,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                                 <button
                                     class="p-1 ml-2 text-gray-400 hover:text-blue-600 bookmark-toggle-btn flex-shrink-0"
                                     title="Set as Bookmark"
-                                    data-bookmark-unit="${UNIT_ID}"
+                                    data-bookmark-unit="${CURRENTSELECTEDUNITID}"
                                     data-bookmark-item="${currentTopic.id}-${quiz.quizId}-a"
                                     data-bookmark-type="quiz"
                                     data-bookmark-name="${currentTopic.name} - ${answerTitle}"
@@ -2740,7 +2740,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                         <button
                             class="p-1 ml-2 text-gray-400 hover:text-blue-600 bookmark-toggle-btn flex-shrink-0"
                             title="Set as Bookmark"
-                            data-bookmark-unit="${UNIT_ID}"
+                            data-bookmark-unit="${CURRENTSELECTEDUNITID}"
                             data-bookmark-item="${currentTopic.id}-video-${index}"
                             data-bookmark-type="video"
                             data-bookmark-name="${currentTopic.name} - Video${videoNumber}"
@@ -2776,7 +2776,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                                 <button
                                     class="p-1 ml-2 text-gray-400 hover:text-blue-600 bookmark-toggle-btn flex-shrink-0"
                                     title="Set as Bookmark"
-                                    data-bookmark-unit="${UNIT_ID}"
+                                    data-bookmark-unit="${CURRENTSELECTEDUNITID}"
                                     data-bookmark-item="${currentTopic.id}-video-${index}-alt"
                                     data-bookmark-type="video"
                                     data-bookmark-name="${currentTopic.name} - Video${videoNumber} (Google Drive)"
@@ -2921,7 +2921,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                             <button
                                 class="p-1 ml-2 text-gray-400 hover:text-blue-600 bookmark-toggle-btn flex-shrink-0"
                                 title="Set as Bookmark"
-                                data-bookmark-unit="${UNIT_ID}"
+                                data-bookmark-unit="${CURRENTSELECTEDUNITID}"
                                 data-bookmark-item="${capstoneTopic.id}-${quiz.quizId}-q"
                                 data-bookmark-type="quiz"
                                 data-bookmark-name="${capstoneTopic.name} - Questions PDF"
@@ -2962,7 +2962,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                             <button
                                 class="p-1 ml-2 text-gray-400 hover:text-blue-600 bookmark-toggle-btn flex-shrink-0"
                                 title="Set as Bookmark"
-                                data-bookmark-unit="${UNIT_ID}"
+                                data-bookmark-unit="${CURRENTSELECTEDUNITID}"
                                 data-bookmark-item="${capstoneTopic.id}-${quiz.quizId}-a"
                                 data-bookmark-type="quiz"
                                 data-bookmark-name="${capstoneTopic.name} - ${answerTitle}"
@@ -3038,7 +3038,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                             <button
                                 class="p-1 ml-1 text-gray-400 hover:text-blue-600 bookmark-toggle-btn flex-shrink-0"
                                 title="Set as Bookmark"
-                                data-bookmark-unit="${UNIT_ID}"
+                                data-bookmark-unit="${CURRENTSELECTEDUNITID}"
                                 data-bookmark-item="${topic.id}-${quiz.quizId}-q"
                                 data-bookmark-type="quiz"
                                 data-bookmark-name="${topic.name} - ${linkText}"
@@ -3072,7 +3072,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                             <button
                                 class="p-1 ml-1 text-gray-400 hover:text-blue-600 bookmark-toggle-btn flex-shrink-0"
                                 title="Set as Bookmark"
-                                data-bookmark-unit="${UNIT_ID}"
+                                data-bookmark-unit="${CURRENTSELECTEDUNITID}"
                                 data-bookmark-item="${topic.id}-${quiz.quizId}-a"
                                 data-bookmark-type="quiz"
                                 data-bookmark-name="${topic.name} - ${answerTitle}"
@@ -3112,7 +3112,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                             <button
                                 class="p-1 ml-1 text-gray-400 hover:text-blue-600 bookmark-toggle-btn flex-shrink-0"
                                 title="Set as Bookmark"
-                                data-bookmark-unit="${UNIT_ID}"
+                                data-bookmark-unit="${CURRENTSELECTEDUNITID}"
                                 data-bookmark-item="${topic.id}-video-${index}"
                                 data-bookmark-type="video"
                                 data-bookmark-name="${topic.name} - Video${videoNumber}"
@@ -3141,7 +3141,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                             <button
                                 class="p-1 ml-1 text-gray-400 hover:text-blue-600 bookmark-toggle-btn flex-shrink-0"
                                 title="Set as Bookmark"
-                                data-bookmark-unit="${UNIT_ID}"
+                                data-bookmark-unit="${CURRENTSELECTEDUNITID}"
                                 data-bookmark-item="${topic.id}-video-${index}-alt"
                                 data-bookmark-type="video"
                                 data-bookmark-name="${topic.name} - Video${videoNumber} (Drive)"
