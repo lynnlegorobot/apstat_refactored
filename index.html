@@ -328,8 +328,12 @@
     
     <!-- Scripts -->
     <script>
+        
+        // Initialize state variable to track the currently active unit
+        let currentSelectedUnitId = '1'; // Default to Unit 1 on load
                 // Utility function for a simple delay
 // Utility function for a simple delay (Needs to be defined)
+
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -1234,8 +1238,6 @@ Thank you for helping me prepare for my AP Statistics exam!`;
         // Define the PDF files and organize them by topic
         ;
         
-        // Initialize state variable to track the currently active unit
-        let currentSelectedUnitId = '1'; // Default to Unit 1 on load
         
         // Function to create a topic card for display in the Study Materials tab
         function createTopicCard(topic, forNextTopic = false) {
