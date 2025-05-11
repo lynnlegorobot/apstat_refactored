@@ -334,6 +334,7 @@
 // Utility function for a simple delay (Needs to be defined)
 function refreshUnitSpecificUI() {
     // Find which tab is currently active
+    document.getElementById('all-completed-container').classList.add('hidden');
     if (document.getElementById('tab-study-materials').classList.contains('active')) {
         loadTopicProgress();
         populateTopicCards();
@@ -1614,67 +1615,67 @@ Thank you for helping me prepare for my AP Statistics exam!`;
         
         // Function to check if all topics are completed
         function checkAllTopicsCompleted() {
-            // Count total individual videos and quizzes
-            let totalItems = 0;
-            let completedItems = 0;
-            
-            getSelectedUnitTopics().forEach(topic => {
-                // Count videos
-                topic.videos.forEach(video => {
-                    totalItems++;
-                    if (video.completed) completedItems++;
-                });
-                
-                // Count quizzes
-                topic.quizzes.forEach(quiz => {
-                    totalItems++;
-                    if (quiz.completed) completedItems++;
-                });
-            });
-            
-            // All items are completed if we have items and all of them are completed
-            const allCompleted = totalItems > 0 && completedItems === totalItems;
-            
-            const completedContainer = document.getElementById('all-completed-container');
-            const topicCardsContainer = document.getElementById('topic-cards-container');
-            const studyMaterialsTab = document.getElementById('content-study-materials');
-            
-            if (allCompleted) {
-                // Show completion message
-                completedContainer.classList.remove('hidden');
-                
-                // Hide the next topic container
-                document.getElementById('next-topic-container').classList.add('hidden');
-                
-                // Add completed state styling to the cards container
-                topicCardsContainer.classList.add('completed-state');
-                
-                // Find the capstone topic card and highlight it
-                const capstoneCard = document.getElementById(`topic-card-exam-frq2`);
-                if (capstoneCard) {
-                    capstoneCard.classList.add('capstone-highlight');
-                }
-                
-                // Add a subtle completion state to the entire tab
-                studyMaterialsTab.classList.add('bg-green-50');
-            } else {
-                // Hide completion message
-                completedContainer.classList.add('hidden');
-                
-                // Remove completed state styling
-                topicCardsContainer.classList.remove('completed-state');
-                studyMaterialsTab.classList.remove('bg-green-50');
-                
-                // Remove capstone highlight
-                const capstoneCard = document.getElementById(`topic-card-exam-frq2`);
-                if (capstoneCard) {
-                    capstoneCard.classList.remove('capstone-highlight');
-                }
-            }
-            
-            return allCompleted;
+    // Use the topics for the currently selected unit
+    const topics = getSelectedUnitTopics();
+    let totalItems = 0;
+    let completedItems = 0;
+    
+    topics.forEach(topic => {
+        // Count videos
+        topic.videos.forEach(video => {
+            totalItems++;
+            if (video.completed) completedItems++;
+        });
+        
+        // Count quizzes
+        topic.quizzes.forEach(quiz => {
+            totalItems++;
+            if (quiz.completed) completedItems++;
+        });
+    });
+    
+    // All items are completed if we have items and all of them are completed
+    const allCompleted = totalItems > 0 && completedItems === totalItems;
+    
+    const completedContainer = document.getElementById('all-completed-container');
+    const topicCardsContainer = document.getElementById('topic-cards-container');
+    const studyMaterialsTab = document.getElementById('content-study-materials');
+    
+    if (allCompleted) {
+        // Show completion message
+        completedContainer.classList.remove('hidden');
+        
+        // Hide the next topic container
+        document.getElementById('next-topic-container').classList.add('hidden');
+        
+        // Add completed state styling to the cards container
+        topicCardsContainer.classList.add('completed-state');
+        
+        // Find the capstone topic card and highlight it
+        const capstoneCard = document.getElementById(`topic-card-exam-frq2`);
+        if (capstoneCard) {
+            capstoneCard.classList.add('capstone-highlight');
         }
         
+        // Add a subtle completion state to the entire tab
+        studyMaterialsTab.classList.add('bg-green-50');
+    } else {
+        // Hide completion message
+        completedContainer.classList.add('hidden');
+        
+        // Remove completed state styling
+        topicCardsContainer.classList.remove('completed-state');
+        studyMaterialsTab.classList.remove('bg-green-50');
+        
+        // Remove capstone highlight
+        const capstoneCard = document.getElementById(`topic-card-exam-frq2`);
+        if (capstoneCard) {
+            capstoneCard.classList.remove('capstone-highlight');
+        }
+    }
+    
+    return allCompleted;
+}
         // Function to reset all progress
         function resetProgress() {
             // Confirm reset
@@ -1727,6 +1728,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
         
         // Function to populate the topic cards
         function populateTopicCards() {
+            document.getElementById('all-completed-container').classList.add('hidden');
             const container = document.getElementById('topic-cards-container');
             if (!container) {
                 console.log('Error: topic-cards-container not found');
