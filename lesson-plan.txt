@@ -1,0 +1,358 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry} % Sets margins to 1 inch
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\usepackage{array}
+\usepackage{booktabs}
+
+% Define Lynn Public Schools colors
+\definecolor{lynnmaroon}{RGB}{128, 0, 32} % Maroon
+\definecolor{lynngrey}{RGB}{128, 128, 128} % Grey
+
+% Setup fancy headers
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{lynnmaroon}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\textbf{\textcolor{lynnmaroon}{Lynn Public Schools - AP Statistics}}}
+\fancyhead[R]{\textbf{\textcolor{lynngrey}{Weekly Analog Lessons 2025-2026}}}
+\fancyfoot[C]{\thepage}
+
+% Title formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{lynnmaroon}}
+  {}
+  {0em}
+  {}[\titlerule]
+  
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{lynngrey}}
+  {}
+  {0em}
+  {}
+
+% Hyperref setup with Lynn colors
+\hypersetup{
+    colorlinks=true,
+    linkcolor=lynnmaroon,
+    filecolor=lynnmaroon,
+    urlcolor=lynnmaroon,
+}
+
+% Custom environments for lesson blocks
+\newcounter{lessoncounter}
+\newenvironment{lesson}[1]{%
+    \refstepcounter{lessoncounter}%
+    \begin{tcolorbox}[
+        colback=white,
+        colframe=lynnmaroon,
+        arc=0mm,
+        title={\textbf{Lesson \thelessoncounter} (#1)},
+        fonttitle=\bfseries\color{white},
+        coltitle=white,
+    ]
+}{%
+    \end{tcolorbox}
+    \vspace{0.5cm}
+}
+
+% Document begins
+\begin{document}
+
+% Title
+\begin{center}
+\textbf{\Huge{\textcolor{lynnmaroon}{AP Statistics}}}\\
+\vspace{0.5em}
+\textbf{\LARGE{\textcolor{lynngrey}{Weekly Analog Lessons}}}\\
+\vspace{0.5em}
+\textbf{\large{School Year 2025-2026}}
+\end{center}
+
+\vspace{1em}
+
+\noindent\textbf{Teacher:} Robert Colson\\
+\textbf{Contact:} colsonr@lynnschools.org\\
+
+\section{Analog Lesson Structure}
+
+My weekly analog lessons are designed to complement your independent learning on AP Stat Navigator. Each ~40-minute session introduces hands-on activities to build intuition and explore statistical concepts physically. These sessions will help you engage with the course material in a different way than the digital resources.
+
+\subsection*{\textcolor{lynnmaroon}{Lesson Structure Reminder}}
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{My Lesson (Mon):} Introduces/Supplements Week N Topics.
+  \item \textbf{Student LMS Work (Tue-Fri):} Covers Week N Topics (Videos + AI-Quiz Practice).
+\end{itemize}
+
+\section*{\textcolor{lynnmaroon}{Quarter 1 Analog Lessons}}
+
+\begin{lesson}{Week 1 - Sep 3-5}
+\textbf{LMS Topics Covered by Students This Week:} Unit 1: 1.1 (Intro), 1.2 (Variables), 1.3 (Categorical Tables).
+
+\textbf{Analog Lesson Focus:} What is Stats? Types of Variables, Intro to Frequency Tables.
+
+\textbf{Activity:} Conduct a quick class survey (e.g., favorite color, mode of transport). Discuss variable types. Manually tally results for one categorical variable into a frequency and relative frequency table on the board/large paper.
+\end{lesson}
+
+\begin{lesson}{Week 2 - Sep 8-12}
+\textbf{LMS Topics Covered:} Unit 1: 1.4 (Cat. Graphs), 1.5 (Quant. Graphs), 1.6 (Describe Dist.), 1.7 (Summary Stats).
+
+\textbf{Analog Lesson Focus:} Visualizing Data \& Describing Distributions (SOCS).
+
+\textbf{Activity:} Use data from Lesson 1 survey (or quick height/arm span measurements). Students hand-draw a bar chart/pie chart OR a dot plot/stemplot. Introduce describing distributions using SOCS (Shape, Outliers, Center, Spread) visually from their hand-drawn plots. Calculate median/mean manually for a small quantitative dataset.
+\end{lesson}
+
+\begin{lesson}{Week 3 - Sep 15-19}
+\textbf{LMS Topics Covered:} Unit 1: 1.8 (Graph Summary), 1.9 (Compare Dist.), 1.10 (Normal Dist.), Unit 1 Capstone Prep.
+
+\textbf{Analog Lesson Focus:} Boxplots, Comparing Groups, Intro to Normal Model.
+
+\textbf{Activity:} Create parallel boxplots by hand comparing two groups (e.g., heights for two self-identified groups). Discuss comparisons using SOCS. Briefly introduce the Normal curve shape using physical demonstration (e.g., drawing, Quincunx if available) and the 68-95-99.7 rule concept.
+\end{lesson}
+
+\begin{lesson}{Week 4 - Sep 22-26}
+\textbf{LMS Topics Covered:} Unit 2: 2.1 (Relationships), 2.2 (Two Cat. Vars), 2.3 (Stats Two Cat.), 2.4 (Scatterplots).
+
+\textbf{Analog Lesson Focus:} Two-Way Tables \& Intro to Scatterplots.
+
+\textbf{Activity:} Collect data for two categorical variables (e.g., fav streaming service vs. hours watched). Create a two-way table on the board. Calculate marginal and conditional distributions by hand. Then, collect data for two quantitative variables (e.g., hand span vs. height). Students create scatterplots on graph paper. Discuss initial interpretations (form, direction, strength, outliers).
+\end{lesson}
+
+\begin{lesson}{Week 5 - Sep 29 - Oct 3}
+\textbf{LMS Topics Covered:} Unit 2: 2.5 (Correlation), 2.6 (LinReg Models), 2.7 (Residuals).
+
+\textbf{Analog Lesson Focus:} Correlation Estimation, LSRL Concept, Residuals Visually.
+
+\textbf{Activity:} Show several scatterplots (drawn or printed). Have students estimate the correlation 'r' by eye. Draw an estimated LSRL on one plot. Select a few points and draw/calculate the residuals vertically on the graph. Discuss what residuals represent (prediction errors).
+\end{lesson}
+
+\begin{lesson}{Week 6 - Oct 6-10}
+\textbf{LMS Topics Covered:} Unit 2: 2.8 (LSRL), 2.9 (Departures), U2 Capstone Prep, Unit 3: 3.1 (Truth?).
+
+\textbf{Analog Lesson Focus:} Interpreting LSRL Output (Slope/Intercept), Identifying Influential Points/Patterns in Residuals, Study Types.
+
+\textbf{Activity:} Provide simple calculator/computer output for LSRL. Students practice interpreting slope and y-intercept in context using precise language. Sketch residual plots showing patterns (curve, fanning) and discuss what they mean. Card sort activity: Match scenarios to "Observational Study" or "Experiment."
+\end{lesson}
+
+\begin{lesson}{Week 7 - Oct 14-17}
+\textbf{LMS Topics Covered:} Unit 3: 3.2 (Planning Studies), 3.3 (Sampling Methods), 3.4 (Sampling Problems).
+
+\textbf{Analog Lesson Focus:} Sampling Techniques in Action \& Bias.
+
+\textbf{Activity:} Simulate sampling methods: Use a class roster (numbers) and random number generator/table (or hat draw) for SRS. Divide class into strata (e.g., grade level) and sample from each. Assign groups and randomly select whole groups (clusters). Discuss potential bias in presented scenarios (convenience, voluntary response, undercoverage).
+\end{lesson}
+
+\begin{lesson}{Week 8 - Oct 20-24}
+\textbf{LMS Topics Covered:} Unit 3: 3.5 (Experiments Intro), 3.6 (Exp. Design), 3.7 (Inference/Experiments).
+
+\textbf{Analog Lesson Focus:} Principles of Experimental Design.
+
+\textbf{Activity:} Present a simple scenario (e.g., testing if listening to music helps memory). Students work in groups on paper/whiteboards to design an experiment: identify explanatory/response variables, treatments, experimental units. Implement randomization using dice/cards. Discuss control group, blinding, confounding variables.
+\end{lesson}
+
+\begin{lesson}{Week 9 - Oct 27-31}
+\textbf{LMS Topics Covered:} U3 Capstone Prep, Unit 4: 4.1 (Patterns), 4.2 (Simulations).
+
+\textbf{Analog Lesson Focus:} Recap Study Design, Randomness, Designing Simulations.
+
+\textbf{Activity:} Quick review game differentiating Sampling vs Experiments. Discuss random phenomena vs deterministic. Design a simulation on paper for a simple probability question (e.g., "What's the probability of getting at least 2 girls in a family of 3 children?"): Define component, model outcome (coin flip/die roll), define trial, state response variable, run trials physically, collect results, form conclusion.
+\end{lesson}
+
+\begin{lesson}{Week 10 - Nov 3-7}
+\textbf{LMS Topics Covered:} Unit 4: 4.3 (Probability Rules), 4.4 (Mutually Exclusive), 4.5 (Conditional).
+
+\textbf{Analog Lesson Focus:} Basic Probability, "Or" Events, Conditional Probability.
+
+\textbf{Activity:} Use decks of cards or bags of colored chips. Calculate simple probabilities P(A). Use Venn diagrams drawn on board to illustrate P(A or B) = P(A) + P(B) - P(A and B). Use two-way table from a previous class survey to calculate conditional probabilities P(A|B) directly from counts.
+\end{lesson}
+
+\section*{\textcolor{lynnmaroon}{Quarter 2 Analog Lessons}}
+
+\begin{lesson}{Week 11 - Nov 10-14}
+\textbf{LMS Topics Covered:} Unit 4: 4.6 (Independence/Unions), 4.7 (Random Var Intro).
+
+\textbf{Analog Lesson Focus:} Independence, "And" Events, Intro to Random Variables.
+
+\textbf{Activity:} Use cards with replacement vs without replacement to illustrate independence/dependence. Calculate P(A and B) using multiplication rule (for independent events). Define a simple discrete random variable based on dice rolls (e.g., X = sum of two dice) and have students list possible outcomes and theoretical probabilities in a table.
+\end{lesson}
+
+\begin{lesson}{Week 12 - Nov 17-21}
+\textbf{LMS Topics Covered:} Unit 4: 4.8 (Mean/SD Random Var), 4.9 (Combining RVs).
+
+\textbf{Analog Lesson Focus:} Expected Value, SD of Random Variables, Rules for Combining.
+
+\textbf{Activity:} Using the discrete probability distribution from Lesson 11, calculate the Expected Value E(X) and Variance/SD by hand using the formulas. Discuss rules for E(aX+b) and SD(aX+b). Conceptually discuss E(X+Y)=E(X)+E(Y) and Var(X+Y)=Var(X)+Var(Y) (if independent).
+\end{lesson}
+
+\begin{lesson}{Week 13 - Nov 24-26}
+\textbf{LMS Topics Covered:} Unit 4: 4.10 (Binomial Intro).
+
+\textbf{Analog Lesson Focus:} Identifying Binomial Settings (BINS).
+
+\textbf{Activity:} Present various scenarios (some binomial, some not). Students work in groups to identify if each scenario meets the BINS conditions (Binary? Independent? Number fixed? Same probability?). Physical simulation (e.g., drawing with replacement) can reinforce independence.
+\end{lesson}
+
+\begin{lesson}{Week 14 - Dec 1-5}
+\textbf{LMS Topics Covered:} Unit 4: 4.11 (Binomial Param.), 4.12 (Geometric).
+
+\textbf{Analog Lesson Focus:} Binomial Calculations \& Geometric Settings.
+
+\textbf{Activity:} Calculate a specific binomial probability P(X=k) by hand/calculator for small n. Calculate mean/SD of a binomial distribution. Contrast with Geometric: Simulate rolling a die until a '6' appears, record number of rolls. Discuss shape/parameters of Geometric distribution.
+\end{lesson}
+
+\begin{lesson}{Week 15 - Dec 8-12}
+\textbf{LMS Topics Covered:} U4 Capstone Prep, Unit 5: 5.1 (Sampling Intro), 5.2 (Normal Rev.).
+
+\textbf{Analog Lesson Focus:} Recap Probability Concepts, Sampling Variability Demo.
+
+\textbf{Activity:} Quick probability review game. Sampling demo: Have a large population of items (e.g., beads, numbered slips). Each student/group takes a small SRS, calculates a statistic (p-hat or x-bar), and places a dot on a class dot plot. Discuss how sample statistics vary. Revisit Normal curve drawing/calculations.
+\end{lesson}
+
+\begin{lesson}{Week 16 - Dec 15-19}
+\textbf{LMS Topics Covered:} Unit 5: 5.3 (CLT), 5.4 (Estimates).
+
+\textbf{Analog Lesson Focus:} Central Limit Theorem Illustrated, Bias/Variability of Estimators.
+
+\textbf{Activity:} Use the sampling distribution dot plot from Lesson 15 (or generate new sample means from dice rolls). Discuss how the shape becomes Normal as n increases (CLT concept). Use pennies: Students sample pennies, record dates. Plot individual dates (population) vs sample means (sampling distribution). Discuss x-bar as unbiased estimator for mu. Target analogy for bias/variability.
+\end{lesson}
+
+\begin{lesson}{Week 17 - Jan 5-9}
+\textbf{LMS Topics Covered:} Unit 5: 5.5 (Sampling Dist. Prop), 5.6 (Diff. Prop).
+
+\textbf{Analog Lesson Focus:} Conditions \& Formulas for Sampling Dist (Proportions).
+
+\textbf{Activity:} Focus on checking conditions (Random, 10\%, Large Counts) using physical scenarios (e.g., bag of chips). Write out formulas for mean/SD of sampling distribution for p-hat and p1-hat - p2-hat. Calculate mean/SD by hand for a given scenario.
+\end{lesson}
+
+\begin{lesson}{Week 18 - Jan 12-16}
+\textbf{LMS Topics Covered:} Unit 5: 5.7 (Sampling Dist. Mean), 5.8 (Diff. Mean), U5 Capstone Prep.
+
+\textbf{Analog Lesson Focus:} Conditions \& Formulas for Sampling Dist (Means), t-distribution intro.
+
+\textbf{Activity:} Check conditions (Random, 10\%, Normal/Large Sample) for means scenarios. Write out formulas for mean/SD of sampling distribution for x-bar and x1-bar - x2-bar. Briefly introduce why we use 't' when sigma is unknown by showing t-curves (drawn) with different df.
+\end{lesson}
+
+\begin{lesson}{Week 19 - Jan 20-23}
+\textbf{LMS Topics Covered:} Unit 6: 6.1 (Why Normal?), 6.2 (CI Prop), 6.3 (Justify CI Prop).
+
+\textbf{Analog Lesson Focus:} Confidence Interval Concept \& Calculation (Proportion).
+
+\textbf{Activity:} Build a CI physically: Draw number line, mark p-hat, calculate Margin of Error by hand (z* x SE), mark interval endpoints. Practice interpreting the interval and confidence level using precise language ("We are X\% confident the interval from... captures the true proportion...").
+\end{lesson}
+
+\section*{\textcolor{lynnmaroon}{Quarter 3 Analog Lessons}}
+
+\begin{lesson}{Week 20 - Jan 26-30}
+\textbf{LMS Topics Covered:} Unit 6: 6.4 (Test Setup Prop), 6.5 (p-Values), 6.6 (Conclude Test Prop).
+
+\textbf{Analog Lesson Focus:} Hypothesis Testing Steps (Proportion).
+
+\textbf{Activity:} Practice writing H0/Ha from word problems. Calculate test statistic (z) by hand for a simple scenario. Sketch Normal curve, shade p-value area, make conclusion based on comparing p-value to alpha. Practice conclusion wording (linkage, context).
+\end{lesson}
+
+\begin{lesson}{Week 21 - Feb 2-6}
+\textbf{LMS Topics Covered:} Unit 6: 6.7 (Errors), 6.8 (CI Diff Prop), 6.9 (Justify CI Diff).
+
+\textbf{Analog Lesson Focus:} Type I/II Errors, Power Concepts, 2-Proportion CIs.
+
+\textbf{Activity:} Discuss consequences of Type I/II errors in real-world scenarios (medicine, law). Draw diagrams illustrating power. Calculate a 2-proportion CI by hand/calculator, focusing on interpreting the interval (does it contain 0?).
+\end{lesson}
+
+\begin{lesson}{Week 22 - Feb 9-13}
+\textbf{LMS Topics Covered:} Unit 6: 6.10 (Test Setup Diff), 6.11 (Carry Out Test Diff), U6 Capstone Prep.
+
+\textbf{Analog Lesson Focus:} 2-Proportion Hypothesis Tests.
+
+\textbf{Activity:} Practice writing H0/Ha for 2-proportion scenarios. Calculate pooled proportion (p-hat-c) and 2-proportion z-statistic by hand/calculator. Review conclusion steps (p-value, linkage, context).
+\end{lesson}
+
+\begin{lesson}{Week 23 - Feb 23-27}
+\textbf{LMS Topics Covered:} Unit 7: 7.1 (Error?), 7.2 (CI Mean), 7.3 (Justify CI Mean).
+
+\textbf{Analog Lesson Focus:} Confidence Intervals for Means (t-interval).
+
+\textbf{Activity:} Review t-distribution (degrees of freedom). Calculate a 1-sample t-interval by hand/calculator (focus on finding critical t*). Interpret the interval and confidence level for means. Check conditions (esp. Normal/Large Sample).
+\end{lesson}
+
+\begin{lesson}{Week 24 - Mar 2-6}
+\textbf{LMS Topics Covered:} Unit 7: 7.4 (Test Setup Mean), 7.5 (Carry Out Test Mean), 7.6 (CI Diff Means).
+
+\textbf{Analog Lesson Focus:} Hypothesis Testing for Means (t-test), Intro 2-Sample t-Intervals.
+
+\textbf{Activity:} Practice writing H0/Ha for 1-sample mean scenarios. Calculate 1-sample t-statistic by hand/calculator. Review conclusion steps. Introduce setup for 2-sample t-interval (independent vs paired discussion).
+\end{lesson}
+
+\begin{lesson}{Week 25 - Mar 9-13}
+\textbf{LMS Topics Covered:} Unit 7: 7.7 (Justify CI Diff), 7.8 (Test Setup Diff Means), 7.9 (Perform Test Diff Means).
+
+\textbf{Analog Lesson Focus:} Interpreting 2-Sample t-Intervals, 2-Sample t-Tests.
+
+\textbf{Activity:} Interpret given 2-sample t-intervals (focus on whether 0 is captured). Practice writing H0/Ha for 2-sample t-tests (independent). Calculate 2-sample t-statistic using calculator (formula is complex). Review conclusion steps.
+\end{lesson}
+
+\begin{lesson}{Week 26 - Mar 16-20}
+\textbf{LMS Topics Covered:} Unit 7: 7.10 (Skills), U7 Capstone Prep, Unit 8: 8.1 (Unexpected?).
+
+\textbf{Analog Lesson Focus:} Choosing the Correct t-Procedure, Intro Chi-Square.
+
+\textbf{Activity:} Scenario sorting activity: Students match descriptions to the correct procedure (1-samp t-int, 1-samp t-test, 2-samp t-int, 2-samp t-test, paired t-int/test). Introduce context for Chi-Square (comparing categorical counts).
+\end{lesson}
+
+\begin{lesson}{Week 27 - Mar 23-27}
+\textbf{LMS Topics Covered:} Unit 8: 8.2 (Chi GOF Setup), 8.3 (Chi GOF Test), 8.4 (Expected Counts).
+
+\textbf{Analog Lesson Focus:} Chi-Square Goodness-of-Fit Test.
+
+\textbf{Activity:} Use a bag of M\&Ms/Skittles (or colored beads). Students count colors (observed). Calculate expected counts assuming manufacturer's claim or equal proportions. Calculate Chi-Square statistic components by hand: (O-E)$^2$ / E for each category, then sum. Use calculator/table for p-value.
+\end{lesson}
+
+\begin{lesson}{Week 28 - Mar 30 - Apr 3}
+\textbf{LMS Topics Covered:} Unit 8: 8.5 (Chi Homog/Indep Setup), 8.6 (Chi Homog/Indep Perform).
+
+\textbf{Analog Lesson Focus:} Chi-Square Tests for Homogeneity/Independence.
+
+\textbf{Activity:} Use 2-way table data from a class survey. Calculate expected counts for each cell: (row total * col total) / grand total. Calculate Chi-Sq statistic using calculator. Discuss the difference in H0/Ha and conclusion phrasing for Homogeneity vs Independence based on study design.
+\end{lesson}
+
+\section*{\textcolor{lynnmaroon}{Quarter 4 - Final Push}}
+
+\begin{lesson}{Week 29 - Apr 6-8}
+\textbf{LMS Topics Covered:} Unit 8: 8.7 (Skills), U8 Capstone Prep, ALL Unit 9 + Capstone.
+
+\textbf{Analog Lesson Focus:} Choosing Chi-Square vs Proportions, Overview Inference for Slope.
+
+\textbf{Activity:} Scenario sorting: Chi-Square GOF vs Homogeneity vs Independence vs z-test for proportions (1 or 2 samples). Briefly introduce context for inference for regression slope (is the linear relationship statistically significant?). Show computer output for slope inference, focusing on identifying slope, SE, t-stat, p-value. This lesson is necessarily lighter due to the immense LMS load this week.
+\end{lesson}
+
+\section*{\textcolor{lynnmaroon}{Post-April 8th AP Exam Review}}
+
+After completing all content by April 8th, we will shift to comprehensive AP Exam review. This will include:
+
+\begin{itemize}[leftmargin=*]
+  \item Practice with complete FRQs and MCQs from previous exams
+  \item Targeted review of challenging concepts identified from Blooket performance
+  \item Strategy sessions for both FRQ and MCQ sections
+  \item Comprehensive practice exams with analysis
+  \item Question-specific review based on student needs
+\end{itemize}
+
+\section{Final Notes}
+
+These analog lessons complement your independent work on AP Stat Navigator. The hands-on activities are designed to build intuition and reinforce conceptual understanding through physical exploration of statistical concepts.
+
+Remember to:
+\begin{itemize}[leftmargin=*]
+  \item Bring your clipboard and scratch paper to each Monday lesson
+  \item Actively participate in the hands-on activities
+  \item Complete the associated LMS work each week to prepare for the next lesson
+  \item Consider the "Origami Option" to transform your class notes into something creative once concepts click
+\end{itemize}
+
+\end{document}
