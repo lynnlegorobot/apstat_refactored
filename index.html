@@ -105,7 +105,7 @@
                 <span class="font-semibold">Exam Weight:</span>Unit 1 represents 15-23% of the AP Statistics Exam
             </div>
         </header>
-        <!-- Unit Tab Navigation -->
+        <!-- Unit Tab Navigation -->    
     <div id="unit-navigation" class="flex flex-wrap mb-4 border-b border-gray-300 pb-2">
         <span class="mr-4 font-semibold">Select Unit:</span>
         <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="1">Unit 1</button>
@@ -333,6 +333,20 @@
         let currentSelectedUnitId = '1'; // Default to Unit 1 on load
                 // Utility function for a simple delay
 // Utility function for a simple delay (Needs to be defined)
+function refreshUnitSpecificUI() {
+    // Find which tab is currently active
+    if (document.getElementById('tab-study-materials').classList.contains('active')) {
+        loadTopicProgress();
+        populateTopicCards();
+        updateAllBookmarkButtons();
+    } else if (document.getElementById('tab-grok-prompt').classList.contains('active')) {
+        loadTopicProgress();
+        updateCurrentTopicInfo();
+        populateQuickAccessTopics();
+        updateAllBookmarkButtons();
+    }
+    // Add similar blocks for other tabs if needed
+}
 function updatePageTitles() {
     const fullUnitId = 'unit' + currentSelectedUnitId;
     const unitData = ALL_UNITS_DATA.find(unit => unit.unitId === fullUnitId);
@@ -2565,6 +2579,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                document.querySelectorAll('.unit-tab').forEach(btn => btn.classList.remove('active-unit-tab'));
                this.classList.add('active-unit-tab');
                updatePageTitles()
+               refreshUnitSpecificUI();
 
                // (Later: Call a function to refresh the UI for the selected unit)
            }
