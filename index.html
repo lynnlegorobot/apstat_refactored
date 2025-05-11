@@ -105,7 +105,19 @@
                 <span class="font-semibold">Exam Weight:</span>Unit 1 represents 15-23% of the AP Statistics Exam
             </div>
         </header>
-        
+        <!-- Unit Navigation -->
+    <div id="unit-navigation" class="flex flex-wrap mb-4 border-b border-gray-300 pb-2">
+        <span class="mr-4 font-semibold">Select Unit:</span>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="1">Unit 1</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="2">Unit 2</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="3">Unit 3</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="4">Unit 4</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="5">Unit 5</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="6">Unit 6</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="7">Unit 7</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="8">Unit 8</button>
+        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="9">Unit 9</button>
+    </div>
         <!-- Tab Navigation -->
         <div class="flex mb-0 border-b border-gray-200">
             <div id="tab-learning-flow" class="tab-button active">Learning Flow</div>
@@ -2190,12 +2202,12 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                 }))
             }));
             
-            localStorage.setItem('apStatsUnit' + UNIT_ID + 'Progress', JSON.stringify(progress));
+            localStorage.setItem('apStatsUnit' + currentSelectedUnitId + 'Progress', JSON.stringify(progress));
         }
         
         // Function to load topic progress from local storage
         function loadTopicProgress() {
-            const savedProgress = localStorage.getItem('apStatsUnit' + UNIT_ID + 'Progress');
+            const savedProgress = localStorage.getItem('apStatsUnit' + currentSelectedUnitId + 'Progress');
             
             if (savedProgress) {
                 const progress = JSON.parse(savedProgress);
@@ -2509,7 +2521,25 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             populateTopicCards();
             
             updateAllBookmarkButtons(); // Update buttons AFTER rendering
-            
+               // Unit Switching Logic
+   document.querySelectorAll('.unit-tab').forEach(button => {
+       button.addEventListener('click', function() {
+           const selectedUnit = this.getAttribute('data-unit-id');
+           if (selectedUnit !== currentSelectedUnitId) {
+               currentSelectedUnitId = selectedUnit;
+               console.log(`Unit selected: ${currentSelectedUnitId}`);
+
+               // Update active tab visual indicator
+               document.querySelectorAll('.unit-tab').forEach(btn => btn.classList.remove('active-unit-tab'));
+               this.classList.add('active-unit-tab');
+
+               // (Later: Call a function to refresh the UI for the selected unit)
+           }
+       });
+   });
+
+   // Set initial active tab style for Unit 1
+   document.querySelector('.unit-tab[data-unit-id="1"]').classList.add('active-unit-tab');
             console.log('DOM fully loaded and parsed');
         });
         
@@ -4228,18 +4258,6 @@ Thank you for helping me prepare for my AP Statistics exam!`;
     </div>
     <!-- End QR Code Section -->
 
-    <!-- Unit Navigation -->
-    <div id="unit-navigation" class="flex flex-wrap mb-4 border-b border-gray-300 pb-2">
-        <span class="mr-4 font-semibold">Select Unit:</span>
-        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="1">Unit 1</button>
-        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="2">Unit 2</button>
-        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="3">Unit 3</button>
-        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="4">Unit 4</button>
-        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="5">Unit 5</button>
-        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="6">Unit 6</button>
-        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="7">Unit 7</button>
-        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="8">Unit 8</button>
-        <button class="unit-tab px-3 py-1 mr-2 mb-2 border rounded" data-unit-id="9">Unit 9</button>
-    </div>
+    
 </body>
 </html> 
