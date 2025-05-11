@@ -783,10 +783,13 @@ const ALL_UNITS_DATA = [
     ]
   },
   {
-    id: "4-1",
-    name: "Topic 4.1",
-    description: "Introducing Statistics: Random and Non-Random Patterns?",
-    videos: [
+    unitId: 'unit4',
+    topics: [
+      {
+        id: "4-1",
+        name: "Topic 4.1",
+        description: "Introducing Statistics: Random and Non-Random Patterns?",
+        videos: [
         {
             url: "https://apclassroom.collegeboard.org/d/7vn9faj6p9?sui=33,4",
             altUrl: "https://drive.google.com/file/d/1lNfQZIrnUbG6JkCzw4wB-kcYNHpckwc-/view?usp=drive_link",
@@ -1143,6 +1146,8 @@ const ALL_UNITS_DATA = [
     ],
     isCapstone: true,
     current: false
+  }
+]
   },
   {
     unitId: 'unit5',
