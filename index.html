@@ -1231,7 +1231,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             // Check if this is a capstone topic and if all previous topics are completed
             let isCapstoneLocked = false;
             if (topic.isCapstone && !forNextTopic) {
-                const nonCapstonePdfs = pdfFiles.filter(p => !p.isCapstone);
+                const nonCapstonePdfs = getSelectedUnitTopics().filter(p => !p.isCapstone);
                 const allPreviousCompleted = nonCapstonePdfs.every(p => 
                     p.videos.every(v => v.completed) && p.quizzes.every(q => q.completed)
                 );
@@ -1573,7 +1573,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             let totalItems = 0;
             let completedItems = 0;
             
-            pdfFiles.forEach(topic => {
+            getSelectedUnitTopics().forEach(topic => {
                 // Count videos
                 topic.videos.forEach(video => {
                     totalItems++;
@@ -1635,7 +1635,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             // Confirm reset
             if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
                 // Reset all topics to not completed
-                pdfFiles.forEach((topic, index) => {
+                getSelectedUnitTopics().forEach((topic, index) => {
                     // Reset all video and quiz completion statuses
                     topic.videos.forEach(video => {
                         video.completed = false;
@@ -1673,7 +1673,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                 document.getElementById('all-completed-container').classList.add('hidden');
                 
                 // Scroll to the first topic if on study materials tab
-                const firstCard = document.getElementById(`topic-card-${pdfFiles[0].id}`);
+                const firstCard = document.getElementById(`topic-card-${getSelectedUnitTopics()[0].id}`);
                 if (firstCard && document.getElementById('content-study-materials').classList.contains('active')) {
                     firstCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
@@ -1691,19 +1691,19 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             container.innerHTML = '';
             
             // Find the first incomplete topic
-            const nextIncompleteIndex = pdfFiles.findIndex(topic => {
+            const nextIncompleteIndex = getSelectedUnitTopics().findIndex(topic => {
                 return !topic.videos.every(v => v.completed) || !topic.quizzes.every(q => q.completed);
             });
             
             // Mark it as current unless all topics are completed
             if (nextIncompleteIndex >= 0) {
-                pdfFiles.forEach((topic, index) => {
+                getSelectedUnitTopics().forEach((topic, index) => {
                     topic.current = index === nextIncompleteIndex;
                 });
             }
             
             // Populate the cards in the original order (sequential)
-            pdfFiles.forEach((topic, index) => {
+            getSelectedUnitTopics().forEach((topic, index) => {
                 const isNext = index === nextIncompleteIndex;
                 // We need to create a real DOM element from the HTML string
                 const cardHTML = createTopicCard(topic, isNext);
@@ -1733,7 +1733,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             const select = document.getElementById('topic-select');
             select.innerHTML = '<option value="">Select a topic...</option>';
             
-            pdfFiles.forEach(topic => {
+            getSelectedUnitTopics().forEach(topic => {
                 const option = document.createElement('option');
                 option.value = topic.id;
                 option.textContent = topic.name;
@@ -1760,7 +1760,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
         // Function to mark a specific video as completed or not completed
         function markVideoComplete(topicId, videoUrl, isCompleted) {
             // Find the topic
-            const topic = pdfFiles.find(t => t.id === topicId);
+            const topic = getSelectedUnitTopics().find(t => t.id === topicId);
             if (!topic) return;
             
             // Find the video object
@@ -1800,7 +1800,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
         // Function to mark a specific quiz as completed or not completed
         function markQuizComplete(topicId, quizId, isCompleted) {
             // Find the topic
-            const topic = pdfFiles.find(t => t.id === topicId);
+            const topic = getSelectedUnitTopics().find(t => t.id === topicId);
             if (!topic) return;
             
             // Find the quiz object
@@ -2009,7 +2009,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
         // Function to mark all videos and quizzes in a topic as completed
         // Function to mark all videos and quizzes in a topic as completed
         async function markTopicAsCompleted(topicId) {
-            const topic = pdfFiles.find(t => t.id === topicId);
+            const topic = getSelectedUnitTopics().find(t => t.id === topicId);
             if (!topic) return;
 
             console.log(`DEBUG (markTopic): Marking topic ${topicId} as completed.`);
@@ -2047,9 +2047,9 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             topic.current = false;
 
             // Automatically mark the next topic as current
-            const currentIndex = pdfFiles.findIndex(t => t.id === topicId);
-            if (currentIndex >= 0 && currentIndex < pdfFiles.length - 1) {
-                const nextTopic = pdfFiles[currentIndex + 1];
+            const currentIndex = getSelectedUnitTopics().findIndex(t => t.id === topicId);
+            if (currentIndex >= 0 && currentIndex < getSelectedUnitTopics().length - 1) {
+                const nextTopic = getSelectedUnitTopics()[currentIndex + 1];
                 if (nextTopic) {
                     nextTopic.current = true;
                 }
@@ -2102,8 +2102,8 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             updateProgressBar();
 
             // Scroll to next topic in study materials tab if applicable
-            if (currentIndex >= 0 && currentIndex < pdfFiles.length - 1 && document.getElementById('content-study-materials').classList.contains('active')) {
-                const nextCard = document.getElementById(`topic-card-${pdfFiles[currentIndex + 1]?.id}`);
+            if (currentIndex >= 0 && currentIndex < getSelectedUnitTopics().length - 1 && document.getElementById('content-study-materials').classList.contains('active')) {
+                const nextCard = document.getElementById(`topic-card-${getSelectedUnitTopics()[currentIndex + 1]?.id}`);
                 if (nextCard) {
                     setTimeout(() => {
                         nextCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -2124,12 +2124,12 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             }
             
             // Find the first incomplete topic
-            const nextIncompleteIndex = pdfFiles.findIndex(topic => !topic.completed);
+            const nextIncompleteIndex = getSelectedUnitTopics().findIndex(topic => !topic.completed);
             
             if (nextIncompleteIndex >= 0) {
                 nextTopicContainer.classList.remove('hidden');
                 nextTopicCard.innerHTML = '';
-                nextTopicCard.appendChild(createTopicCard(pdfFiles[nextIncompleteIndex], true));
+                nextTopicCard.appendChild(createTopicCard(getSelectedUnitTopics()[nextIncompleteIndex], true));
             } else {
                 nextTopicContainer.classList.add('hidden');
             }
@@ -2142,7 +2142,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             if (!progressBar) return;
             
             // Count completed topics and total topics excluding capstone
-            const nonCapstonePdfs = pdfFiles.filter(p => !p.isCapstone);
+            const nonCapstonePdfs = getSelectedUnitTopics().filter(p => !p.isCapstone);
             const completedTopics = nonCapstonePdfs.filter(topic => 
                 topic.videos.every(v => v.completed) && topic.quizzes.every(q => q.completed)
             ).length;
@@ -2185,7 +2185,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
         
         // Function to save topic progress to local storage
         function saveTopicProgress() {
-            const progress = pdfFiles.map(topic => ({
+            const progress = getSelectedUnitTopics().map(topic => ({
                 id: topic.id,
                 completed: topic.videos.every(v => v.completed) && topic.quizzes.every(q => q.completed),
                 current: topic.current,
@@ -2212,9 +2212,9 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             if (savedProgress) {
                 const progress = JSON.parse(savedProgress);
                 
-                // Update the pdfFiles array with saved progress
+                // Update the getSelectedUnitTopics() array with saved progress
                     progress.forEach(savedTopic => {
-                    const topic = pdfFiles.find(t => t.id === savedTopic.id);
+                    const topic = getSelectedUnitTopics().find(t => t.id === savedTopic.id);
                         if (topic) {
                             // A topic is considered completed if all its videos and quizzes are completed
                             // or if it was previously marked as completed in the old structure
@@ -2552,7 +2552,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             loadTopicProgress();
             
             // Check if all topics are completed
-            const allCompleted = pdfFiles.every(topic => {
+            const allCompleted = getSelectedUnitTopics().every(topic => {
                 return topic.videos.every(v => v.completed) && topic.quizzes.every(q => q.completed);
             });
             
@@ -2598,7 +2598,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                 return;
             }
             
-            const currentTopic = pdfFiles.find(topic => topic.current) || pdfFiles[0];
+            const currentTopic = getSelectedUnitTopics().find(topic => topic.current) || getSelectedUnitTopics()[0];
             
             if (currentTopic) {
                 // Check if this topic is completed
@@ -2870,7 +2870,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             container.innerHTML = '';
             
             // Check if all topics are completed
-            const allCompleted = pdfFiles.every(topic => {
+            const allCompleted = getSelectedUnitTopics().every(topic => {
                 return topic.videos.every(v => v.completed) && topic.quizzes.every(q => q.completed);
             });
             
@@ -2885,7 +2885,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                 `;
                 
                 // Add the capstone challenge at the top
-                const capstoneTopic = pdfFiles.find(topic => topic.isCapstone);
+                const capstoneTopic = getSelectedUnitTopics().find(topic => topic.isCapstone);
                 if (capstoneTopic) {
                     const capstoneCard = document.createElement('div');
                     capstoneCard.className = 'col-span-2 p-4 rounded-lg shadow-md bg-red-50 border border-red-200 capstone-highlight';
@@ -2992,7 +2992,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
             }
             
             // If not all completed or even after showing completed state, add the topic cards
-            pdfFiles.forEach(topic => {
+            getSelectedUnitTopics().forEach(topic => {
                 // If all completed and this is the capstone, skip (we already added it above)
                 if (allCompleted && topic.isCapstone) return;
                 
@@ -3167,7 +3167,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
                     if (e.target.tagName === 'A' || e.target.tagName === 'INPUT') return;
                     
                     // Set this topic as current
-                    pdfFiles.forEach(t => t.current = false);
+                    getSelectedUnitTopics().forEach(t => t.current = false);
                     topic.current = true;
                     saveTopicProgress();
                     
@@ -3190,7 +3190,7 @@ Thank you for helping me prepare for my AP Statistics exam!`;
         
         // Function to set a topic as current
         function setTopicAsCurrent(topicName) {
-            pdfFiles.forEach(topic => {
+            getSelectedUnitTopics().forEach(topic => {
                 topic.current = (topic.name === topicName);
             });
             saveTopicProgress();
