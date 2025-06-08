@@ -340,6 +340,325 @@
             transform: scale(1.1);
         }
 
+        /* Lesson Experience Interface */
+        .lesson-experience {
+            display: none;
+            background: linear-gradient(135deg, #e8f5e8 0%, #d4f4d4 50%, #c1f2c1 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .lesson-experience.active {
+            display: block;
+        }
+
+        .lesson-header {
+            background: #2d5a2d;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .lesson-back-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .lesson-back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .lesson-info {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .lesson-main-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .lesson-main-description {
+            opacity: 0.9;
+            font-size: 1em;
+            margin: 0;
+        }
+
+        .lesson-progress-badge {
+            background: #FFD54F;
+            color: #333;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .lesson-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .lesson-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .lesson-section:hover {
+            border-color: #4CAF50;
+            transform: translateY(-2px);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .section-icon {
+            font-size: 1.5em;
+            width: 40px;
+            text-align: center;
+        }
+
+        .section-title {
+            flex: 1;
+            font-size: 1.3em;
+            color: #2d5a2d;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .section-status {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .section-content {
+            padding: 20px;
+        }
+
+        /* Video Items */
+        .video-item {
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4CAF50;
+            transition: all 0.3s ease;
+        }
+
+        .video-item:hover {
+            background: #f0f8f0;
+            transform: translateX(5px);
+        }
+
+        .video-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .video-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .video-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .video-link {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .video-link:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .video-link.alt {
+            background: #2196F3;
+        }
+
+        .video-link.alt:hover {
+            background: #1976D2;
+        }
+
+        /* Quiz Items */
+        .quiz-item {
+            background: #fff3e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #FF7043;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-item:hover {
+            background: #fff8f0;
+            transform: translateX(5px);
+        }
+
+        .quiz-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .quiz-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .quiz-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quiz-btn.download {
+            background: #FF7043;
+            color: white;
+        }
+
+        .quiz-btn.download:hover {
+            background: #E64A19;
+            transform: translateY(-2px);
+        }
+
+        .quiz-btn.grok {
+            background: #2196F3;
+            color: white;
+        }
+
+        .quiz-btn.grok:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+
+        /* Completion Card */
+        .completion-card {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .completion-message h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .completion-message p {
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .completion-btn {
+            background: white;
+            color: #4CAF50;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .completion-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .completion-btn:disabled {
+            background: #ccc;
+            color: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Mobile Responsive for Lesson Experience */
+        @media (max-width: 768px) {
+            .lesson-experience {
+                padding: 10px;
+            }
+
+            .lesson-header {
+                padding: 15px;
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .lesson-main-title {
+                font-size: 1.5em;
+            }
+
+            .video-links, .quiz-actions {
+                flex-direction: column;
+            }
+
+            .video-link, .quiz-btn {
+                justify-content: center;
+            }
+        }
+
 
 
         /* Mobile responsive */
@@ -424,6 +743,64 @@
 
         <div class="lesson-path" id="lessonPath">
             <!-- Will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Full Lesson Experience Screen -->
+    <div class="lesson-experience" id="lessonExperience">
+        <div class="lesson-header">
+            <button class="lesson-back-btn" onclick="backToLessonPath()">← BACK TO LESSONS</button>
+            <div class="lesson-info">
+                <h1 class="lesson-main-title" id="lessonMainTitle">Topic 1.1</h1>
+                <p class="lesson-main-description" id="lessonMainDescription">Loading...</p>
+            </div>
+            <div class="lesson-progress-badge" id="lessonProgressBadge">1/3</div>
+        </div>
+
+        <div class="lesson-content">
+            <!-- Video Section -->
+            <div class="lesson-section video-section" id="videoSection">
+                <div class="section-header">
+                    <div class="section-icon">🎥</div>
+                    <h2 class="section-title">Watch Videos</h2>
+                    <div class="section-status" id="videoStatus">0/1 completed</div>
+                </div>
+                <div class="section-content" id="videoContent">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="lesson-section quiz-section" id="quizSection">
+                <div class="section-header">
+                    <div class="section-icon">📄</div>
+                    <h2 class="section-title">Practice Quizzes</h2>
+                    <div class="section-status" id="quizStatus">0/1 completed</div>
+                </div>
+                <div class="section-content" id="quizContent">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Completion Section -->
+            <div class="lesson-section completion-section" id="completionSection">
+                <div class="section-header">
+                    <div class="section-icon">✅</div>
+                    <h2 class="section-title">Mark Complete</h2>
+                    <div class="section-status" id="completionStatus">Ready</div>
+                </div>
+                <div class="section-content">
+                    <div class="completion-card">
+                        <div class="completion-message">
+                            <h3>Great work! Ready to complete this lesson?</h3>
+                            <p>Make sure you've watched all videos and attempted the practice quizzes.</p>
+                        </div>
+                        <button class="completion-btn" id="completionBtn" onclick="completeLessonFromInterface()">
+                            🎯 Complete Lesson
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -673,6 +1050,14 @@
             return currentUnit.topics[lessonIndex - 1].completed;
         }
 
+        // Global variables for lesson experience
+        let currentLessonData = null;
+        let currentLessonProgress = {
+            videosWatched: [],
+            quizzesCompleted: [],
+            lessonCompleted: false
+        };
+
         // Select a lesson
         function selectLesson(lessonId) {
             const topic = currentUnit.topics.find(t => t.id === lessonId);
@@ -680,15 +1065,193 @@
                 return;
             }
             
-            // For now, just show lesson details
-            alert(`Opening ${topic.name}!\n\nDescription: ${topic.description}\n\nThis would open:\n• Video player (${topic.videos.length} videos)\n• PDF quizzes (${topic.quizzes.length} quizzes)\n• One-click Grok integration\n• Progress tracking`);
+            // Open lesson experience
+            openLessonExperience(topic);
+        }
+
+        // Open the full lesson experience
+        function openLessonExperience(topic) {
+            currentLessonData = topic;
             
-            // Demo: Mark as completed and update progress
-            if (!topic.completed) {
-                studentProgress.completedLessons.add(lessonId);
+            // Load lesson progress from storage
+            const savedProgress = localStorage.getItem(`lesson_progress_${topic.id}`);
+            if (savedProgress) {
+                currentLessonProgress = JSON.parse(savedProgress);
+            } else {
+                currentLessonProgress = {
+                    videosWatched: [],
+                    quizzesCompleted: [],
+                    lessonCompleted: topic.completed || false
+                };
+            }
+
+            // Hide other screens
+            document.getElementById('unitSelector').style.display = 'none';
+            document.getElementById('lessonSelector').classList.remove('active');
+            
+            // Show lesson experience
+            document.getElementById('lessonExperience').classList.add('active');
+            
+            // Populate lesson interface
+            populateLessonInterface();
+        }
+
+        // Populate the lesson interface with real data
+        function populateLessonInterface() {
+            if (!currentLessonData) return;
+
+            // Update header
+            document.getElementById('lessonMainTitle').textContent = currentLessonData.name;
+            document.getElementById('lessonMainDescription').textContent = currentLessonData.description;
+            
+            // Populate videos
+            populateVideoSection();
+            
+            // Populate quizzes
+            populateQuizSection();
+            
+            // Update completion section
+            updateCompletionSection();
+            
+            // Update progress badge
+            updateProgressBadge();
+        }
+
+        // Populate video section
+        function populateVideoSection() {
+            const videoContent = document.getElementById('videoContent');
+            const videoStatus = document.getElementById('videoStatus');
+            
+            if (!currentLessonData.videos || currentLessonData.videos.length === 0) {
+                videoContent.innerHTML = '<p style="color: #666; text-align: center; padding: 20px;">No videos available for this lesson.</p>';
+                videoStatus.textContent = 'No videos';
+                return;
+            }
+
+            let videoHTML = '';
+            currentLessonData.videos.forEach((video, index) => {
+                const isWatched = currentLessonProgress.videosWatched.includes(index);
+                
+                videoHTML += `
+                    <div class="video-item ${isWatched ? 'completed' : ''}">
+                        <div class="video-title">${video.title || `Video ${index + 1}`}</div>
+                        <div class="video-links">
+                            <a href="${video.ap_classroom_url}" target="_blank" class="video-link" onclick="markVideoWatched(${index})">
+                                🎓 AP Classroom
+                            </a>
+                            ${video.google_drive_url ? `
+                                <a href="${video.google_drive_url}" target="_blank" class="video-link alt" onclick="markVideoWatched(${index})">
+                                    📁 Google Drive
+                                </a>
+                            ` : ''}
+                        </div>
+                        ${isWatched ? '<div style="color: #4CAF50; margin-top: 10px;">✅ Watched</div>' : ''}
+                    </div>
+                `;
+            });
+
+            videoContent.innerHTML = videoHTML;
+            videoStatus.textContent = `${currentLessonProgress.videosWatched.length}/${currentLessonData.videos.length} completed`;
+        }
+
+        // Populate quiz section
+        function populateQuizSection() {
+            const quizContent = document.getElementById('quizContent');
+            const quizStatus = document.getElementById('quizStatus');
+            
+            if (!currentLessonData.quizzes || currentLessonData.quizzes.length === 0) {
+                quizContent.innerHTML = '<p style="color: #666; text-align: center; padding: 20px;">No practice quizzes available for this lesson.</p>';
+                quizStatus.textContent = 'No quizzes';
+                return;
+            }
+
+            let quizHTML = '';
+            currentLessonData.quizzes.forEach((quiz, index) => {
+                const isCompleted = currentLessonProgress.quizzesCompleted.includes(index);
+                
+                quizHTML += `
+                    <div class="quiz-item ${isCompleted ? 'completed' : ''}">
+                        <div class="quiz-title">${quiz.title || `Practice Quiz ${index + 1}`}</div>
+                        <div class="quiz-actions">
+                            <a href="${quiz.url}" target="_blank" class="quiz-btn download">
+                                📄 Download PDF
+                            </a>
+                            <button class="quiz-btn grok" onclick="openGrokIntegration('${quiz.url}', ${index})">
+                                🤖 Open in Grok
+                            </button>
+                        </div>
+                        ${isCompleted ? '<div style="color: #4CAF50; margin-top: 10px;">✅ Completed</div>' : ''}
+                    </div>
+                `;
+            });
+
+            quizContent.innerHTML = quizHTML;
+            quizStatus.textContent = `${currentLessonProgress.quizzesCompleted.length}/${currentLessonData.quizzes.length} completed`;
+        }
+
+        // Update completion section
+        function updateCompletionSection() {
+            const completionBtn = document.getElementById('completionBtn');
+            const completionStatus = document.getElementById('completionStatus');
+            
+            if (currentLessonProgress.lessonCompleted) {
+                completionBtn.textContent = '✅ Lesson Complete';
+                completionBtn.disabled = true;
+                completionStatus.textContent = 'Completed';
+                completionStatus.style.background = '#4CAF50';
+                completionStatus.style.color = 'white';
+            } else {
+                completionBtn.textContent = '🎯 Complete Lesson';
+                completionBtn.disabled = false;
+                completionStatus.textContent = 'Ready';
+                completionStatus.style.background = '#e3f2fd';
+                completionStatus.style.color = '#1976d2';
+            }
+        }
+
+        // Mark video as watched
+        function markVideoWatched(videoIndex) {
+            if (!currentLessonProgress.videosWatched.includes(videoIndex)) {
+                currentLessonProgress.videosWatched.push(videoIndex);
+                saveLessonProgress();
+                populateVideoSection();
+                updateProgressBadge();
+            }
+        }
+
+        // Open Grok integration
+        function openGrokIntegration(pdfUrl, quizIndex) {
+            // Mark quiz as completed
+            if (!currentLessonProgress.quizzesCompleted.includes(quizIndex)) {
+                currentLessonProgress.quizzesCompleted.push(quizIndex);
+                saveLessonProgress();
+                populateQuizSection();
+                updateProgressBadge();
+            }
+            
+            // Open Grok (same functionality as before)
+            window.open('https://grok.com', '_blank');
+            
+            // Show instructions
+            setTimeout(() => {
+                alert(`Grok Integration:\n\n1. Upload the PDF you just downloaded\n2. Ask Grok to help you solve the problems\n3. Come back when you're ready to complete the lesson!`);
+            }, 1000);
+        }
+
+        // Complete lesson from interface
+        function completeLessonFromInterface() {
+            if (!currentLessonData) return;
+            
+            // Mark lesson as completed
+            currentLessonProgress.lessonCompleted = true;
+            saveLessonProgress();
+            
+            // Update the lesson in the main data (same logic as before)
+            if (!currentLessonData.completed) {
+                studentProgress.completedLessons.add(currentLessonData.id);
                 
                 // Find next lesson
-                const nextIndex = currentUnit.topics.indexOf(topic) + 1;
+                const nextIndex = currentUnit.topics.indexOf(currentLessonData) + 1;
                 if (nextIndex < currentUnit.topics.length) {
                     studentProgress.currentLesson = currentUnit.topics[nextIndex].id;
                 } else {
@@ -704,13 +1267,39 @@
                 initializeUnitsData();
                 generateUnitsGrid();
                 calculateNextDeadline();
-                
-                if (document.getElementById('lessonSelector').classList.contains('active')) {
-                    // Update currentUnit reference to the newly initialized data
-                    currentUnit = unitsData[currentUnitIndex];
-                    generateLessonPath();
-                }
             }
+            
+            // Update interface
+            updateCompletionSection();
+            updateProgressBadge();
+            
+            // Show success message
+            alert(`🎉 Congratulations!\n\nYou've completed: ${currentLessonData.name}\n\nGreat job! Keep up the momentum!`);
+        }
+
+        // Save lesson progress
+        function saveLessonProgress() {
+            if (!currentLessonData) return;
+            localStorage.setItem(`lesson_progress_${currentLessonData.id}`, JSON.stringify(currentLessonProgress));
+        }
+
+        // Update progress badge
+        function updateProgressBadge() {
+            const totalSections = 3;
+            let completedSections = 0;
+            
+            if (currentLessonProgress.videosWatched.length > 0) completedSections++;
+            if (currentLessonProgress.quizzesCompleted.length > 0) completedSections++;
+            if (currentLessonProgress.lessonCompleted) completedSections++;
+            
+            document.getElementById('lessonProgressBadge').textContent = `${completedSections}/${totalSections}`;
+        }
+
+        // Back to lesson path
+        function backToLessonPath() {
+            document.getElementById('lessonExperience').classList.remove('active');
+            document.getElementById('lessonSelector').classList.add('active');
+            currentLessonData = null;
         }
 
         // Keyboard navigation
