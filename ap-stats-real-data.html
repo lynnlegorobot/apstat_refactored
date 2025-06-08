@@ -392,21 +392,6 @@
 <body>
     <!-- Include the actual lesson data -->
     <script src="js/allUnitsData.js"></script>
-    <!-- QR Code generation library with fallback -->
-    <script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js" onerror="loadQRCodeFallback()"></script>
-    <script>
-        // Fallback QR code loader
-        function loadQRCodeFallback() {
-            console.log('Primary QR library failed, trying fallback...');
-            const script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js';
-            script.onerror = function() {
-                console.log('Fallback QR library also failed, using text-based alternative');
-                window.QRCodeFallback = true;
-            };
-            document.head.appendChild(script);
-        }
-    </script>
 
     <!-- Header -->
     <div class="game-header">
@@ -840,70 +825,82 @@
             // Show modal first
             modal.style.display = 'flex';
             
-            // Check if QRCode library is available
-            if (typeof QRCode === 'undefined' || window.QRCodeFallback) {
-                console.log('QRCode library not available, showing URL instead');
-                // Create a text-based alternative
-                canvas.style.display = 'none';
-                const urlDisplay = document.createElement('div');
-                urlDisplay.style.cssText = `
-                    background: #f5f5f5; 
-                    border: 2px dashed #2d5a2d; 
-                    padding: 15px; 
-                    border-radius: 10px; 
-                    word-break: break-all; 
-                    font-family: monospace; 
-                    font-size: 12px;
-                    line-height: 1.4;
-                `;
-                urlDisplay.innerHTML = `
-                    <strong style="color: #2d5a2d;">Mobile Lesson URL:</strong><br>
-                    <span style="color: #666;">${mobileUrl}</span><br><br>
-                    <small style="color: #888;">Copy this URL to your phone's browser or use the test link below.</small>
-                `;
-                canvas.parentNode.insertBefore(urlDisplay, canvas);
-                return;
+            // Hide canvas and create QR image using API service
+            canvas.style.display = 'none';
+            
+            // Remove any previous QR content
+            const container = canvas.parentNode;
+            const existingQR = container.querySelector('.qr-image-container');
+            if (existingQR) {
+                existingQR.remove();
             }
             
-            // Generate QR code
-            try {
-                QRCode.toCanvas(canvas, mobileUrl, {
-                    width: 200,
-                    margin: 2,
-                    color: {
-                        dark: '#2d5a2d',
-                        light: '#ffffff'
-                    }
-                }, function (error) {
-                    if (error) {
-                        console.error('QR Code generation error:', error);
-                        // Show text fallback on error
-                        canvas.style.display = 'none';
-                        const errorDiv = document.createElement('div');
-                        errorDiv.innerHTML = `
-                            <div style="background: #ffebee; border-radius: 8px; padding: 15px; color: #c62828;">
-                                <strong>QR Generation Failed</strong><br>
-                                <small>Use the test link below instead</small>
-                            </div>
-                        `;
-                        canvas.parentNode.insertBefore(errorDiv, canvas);
-                    } else {
-                        console.log('QR code generated successfully');
-                        canvas.style.display = 'block';
-                    }
-                });
-            } catch (e) {
-                console.error('QR Code library error:', e);
-                canvas.style.display = 'none';
-                const errorDiv = document.createElement('div');
-                errorDiv.innerHTML = `
-                    <div style="background: #ffebee; border-radius: 8px; padding: 15px; color: #c62828;">
-                        <strong>QR Library Error</strong><br>
-                        <small>Use the test link below</small>
+            // Create QR code container
+            const qrContainer = document.createElement('div');
+            qrContainer.className = 'qr-image-container';
+            qrContainer.style.cssText = `
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 20px 0;
+                min-height: 200px;
+                background: #f9f9f9;
+                border-radius: 10px;
+                border: 2px solid #e0e0e0;
+            `;
+            
+            // Show loading message
+            qrContainer.innerHTML = `
+                <div style="text-align: center; color: #666;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">⏳</div>
+                    <div>Generating QR Code...</div>
+                </div>
+            `;
+            
+            container.insertBefore(qrContainer, canvas);
+            
+            // Generate QR code using API service
+            const encodedUrl = encodeURIComponent(mobileUrl);
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodedUrl}&color=2d5a2d&bgcolor=ffffff`;
+            
+            // Create image element
+            const qrImage = new Image();
+            qrImage.style.cssText = `
+                max-width: 200px;
+                max-height: 200px;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            `;
+            
+            qrImage.onload = function() {
+                console.log('QR code image loaded successfully');
+                qrContainer.innerHTML = '';
+                qrContainer.appendChild(qrImage);
+            };
+            
+            qrImage.onerror = function() {
+                console.error('QR code API failed, showing URL fallback');
+                qrContainer.innerHTML = `
+                    <div style="
+                        background: #f5f5f5; 
+                        border: 2px dashed #2d5a2d; 
+                        padding: 15px; 
+                        border-radius: 10px; 
+                        word-break: break-all; 
+                        font-family: monospace; 
+                        font-size: 12px;
+                        line-height: 1.4;
+                        max-width: 300px;
+                    ">
+                        <strong style="color: #2d5a2d;">Mobile Lesson URL:</strong><br>
+                        <span style="color: #666;">${mobileUrl}</span><br><br>
+                        <small style="color: #888;">Copy this URL to your phone's browser or use the test link below.</small>
                     </div>
                 `;
-                canvas.parentNode.insertBefore(errorDiv, canvas);
-            }
+            };
+            
+            // Set the image source to trigger loading
+            qrImage.src = qrApiUrl;
         }
 
         function closeQRModal() {
@@ -911,13 +908,17 @@
             const canvas = document.getElementById('qrCanvas');
             const container = canvas.parentNode;
             
-            // Clean up any previous content
-            const existingDivs = container.querySelectorAll('div:not(.qr-title):not(.qr-subtitle):not(.qr-instructions)');
-            existingDivs.forEach(div => div.remove());
+            // Clean up any QR image containers
+            const existingQR = container.querySelector('.qr-image-container');
+            if (existingQR) {
+                existingQR.remove();
+            }
             
-            // Reset canvas
+            // Reset canvas (though we're not using it anymore)
             canvas.style.display = 'block';
-            canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+            if (canvas.getContext) {
+                canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+            }
             
             modal.style.display = 'none';
         }
