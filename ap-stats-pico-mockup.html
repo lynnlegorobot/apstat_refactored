@@ -182,6 +182,11 @@
             animation: pulse 2s infinite;
         }
 
+        .lesson-box.selected {
+            box-shadow: 0 0 0 4px #FFD54F, 0 6px 12px rgba(0,0,0,0.2);
+            transform: scale(1.05);
+        }
+
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -451,20 +456,7 @@
         // Initialize deadline calculation when page loads
         window.addEventListener('load', calculateNextDeadline);
 
-        // Simple navigation for mockup
-        function selectUnit(unitNumber) {
-            // Only allow access to unlocked units
-            if (unitNumber <= 2) {
-                document.getElementById('unitSelector').style.display = 'none';
-                document.getElementById('lessonSelector').classList.add('active');
-                
-                if (unitNumber === 1) {
-                    document.getElementById('unitTitle').textContent = 'UNIT 1: EXPLORING ONE-VARIABLE DATA';
-                } else if (unitNumber === 2) {
-                    document.getElementById('unitTitle').textContent = 'UNIT 2: EXPLORING TWO-VARIABLE DATA';
-                }
-            }
-        }
+        // Navigation functions
 
         function backToUnits() {
             document.getElementById('lessonSelector').classList.remove('active');
@@ -479,11 +471,73 @@
         }
 
         // Keyboard navigation simulation
+        let currentLessonIndex = 3; // Currently on lesson 4 (0-indexed = 3)
+        const maxLessons = 11; // Total lessons in unit (including capstone)
+        
         document.addEventListener('keydown', function(e) {
+            // Only handle navigation if we're on the lesson selector screen
+            const lessonSelector = document.getElementById('lessonSelector');
+            const isOnLessonScreen = lessonSelector.classList.contains('active');
+            
             if (e.key === 'ArrowUp') {
                 backToUnits();
+            } else if (isOnLessonScreen) {
+                if (e.key === 'ArrowRight') {
+                    // Move to next lesson (if unlocked)
+                    if (currentLessonIndex < 3) { // Can only go up to current lesson (lesson 4, index 3)
+                        currentLessonIndex++;
+                        updateSelectedLesson();
+                    }
+                } else if (e.key === 'ArrowLeft') {
+                    // Move to previous lesson
+                    if (currentLessonIndex > 0) {
+                        currentLessonIndex--;
+                        updateSelectedLesson();
+                    }
+                } else if (e.key === 'Enter' || e.key === ' ') {
+                    // Enter/Space to select current lesson
+                    const currentLesson = getCurrentLessonId();
+                    selectLesson(currentLesson);
+                }
             }
         });
+
+        function updateSelectedLesson() {
+            // Remove previous highlighting
+            document.querySelectorAll('.lesson-box').forEach(box => {
+                box.classList.remove('selected');
+            });
+            
+            // Add selection highlight to current lesson
+            const lessonBoxes = document.querySelectorAll('.lesson-box:not(.locked)');
+            if (lessonBoxes[currentLessonIndex]) {
+                lessonBoxes[currentLessonIndex].classList.add('selected');
+                lessonBoxes[currentLessonIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function getCurrentLessonId() {
+            const lessonIds = ['1-1', '1-2', '1-3', '1-4']; // Available lessons
+            return lessonIds[currentLessonIndex] || '1-1';
+        }
+
+        // Initialize selection on lesson screen
+        function selectUnit(unitNumber) {
+            // Only allow access to unlocked units
+            if (unitNumber <= 2) {
+                document.getElementById('unitSelector').style.display = 'none';
+                document.getElementById('lessonSelector').classList.add('active');
+                
+                if (unitNumber === 1) {
+                    document.getElementById('unitTitle').textContent = 'UNIT 1: EXPLORING ONE-VARIABLE DATA';
+                } else if (unitNumber === 2) {
+                    document.getElementById('unitTitle').textContent = 'UNIT 2: EXPLORING TWO-VARIABLE DATA';
+                }
+                
+                // Set initial selection
+                setTimeout(updateSelectedLesson, 100);
+            }
+        }
     </script>
 </body>
 </html> 
