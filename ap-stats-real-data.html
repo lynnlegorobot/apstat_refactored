@@ -431,7 +431,7 @@
 
         // Initialize units data with progress
         function initializeUnitsData() {
-            unitsData = ALL_UNITS_DATA.map(unit => {
+            unitsData = ALL_UNITS_DATA.map((unit, unitIndex) => {
                 const topics = unit.topics.map(topic => ({
                     ...topic,
                     completed: studentProgress.completedLessons.has(topic.id),
@@ -440,7 +440,7 @@
                 
                 const completedCount = topics.filter(t => t.completed).length;
                 const progress = `${completedCount}/${topics.length}`;
-                const isUnlocked = unit.unitId === 'unit1' || isUnitUnlocked(unit.unitId);
+                const isUnlocked = isUnitUnlocked(unitIndex, ALL_UNITS_DATA);
                 
                 return {
                     ...unit,
@@ -453,13 +453,19 @@
         }
 
         // Check if a unit should be unlocked
-        function isUnitUnlocked(unitId) {
-            const unitNumber = parseInt(unitId.replace('unit', ''));
-            if (unitNumber <= 1) return true;
+        function isUnitUnlocked(unitIndex, allUnitsData = ALL_UNITS_DATA) {
+            if (unitIndex <= 0) return true;
             
-            // Check if previous unit is complete
-            const prevUnitData = unitsData.find(u => u.unitId === `unit${unitNumber - 1}`);
-            return prevUnitData && prevUnitData.completedCount === prevUnitData.topics.length;
+            // Check if previous unit is complete by checking completed lessons
+            const prevUnit = allUnitsData[unitIndex - 1];
+            if (!prevUnit) return false;
+            
+            // Count how many lessons from previous unit are completed
+            const prevUnitCompletedCount = prevUnit.topics.filter(topic => 
+                studentProgress.completedLessons.has(topic.id)
+            ).length;
+            
+            return prevUnitCompletedCount === prevUnit.topics.length;
         }
 
         // Generate units grid HTML
