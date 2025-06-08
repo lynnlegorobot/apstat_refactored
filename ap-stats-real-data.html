@@ -392,8 +392,21 @@
 <body>
     <!-- Include the actual lesson data -->
     <script src="js/allUnitsData.js"></script>
-    <!-- QR Code generation library -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <!-- QR Code generation library with fallback -->
+    <script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js" onerror="loadQRCodeFallback()"></script>
+    <script>
+        // Fallback QR code loader
+        function loadQRCodeFallback() {
+            console.log('Primary QR library failed, trying fallback...');
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js';
+            script.onerror = function() {
+                console.log('Fallback QR library also failed, using text-based alternative');
+                window.QRCodeFallback = true;
+            };
+            document.head.appendChild(script);
+        }
+    </script>
 
     <!-- Header -->
     <div class="game-header">
@@ -439,6 +452,10 @@
             </div>
             <div class="qr-instructions">
                 Scan this QR code with your phone's camera to access this lesson on mobile with videos, PDFs, and one-click Grok integration.
+                <br><br>
+                <small style="opacity: 0.7;">
+                    For testing: <a href="#" id="testMobileLink" target="_blank" style="color: #2d5a2d;">Click here to test mobile version</a>
+                </small>
             </div>
             <button class="qr-close" onclick="closeQRModal()">Close</button>
         </div>
@@ -647,6 +664,7 @@
                     qrButton.innerHTML = '📱';
                     qrButton.title = 'Get QR code for mobile access';
                     qrButton.onclick = (e) => {
+                        console.log('QR button clicked for topic:', topic.id);
                         e.stopPropagation();
                         showQRCode(topic);
                     };
@@ -791,35 +809,117 @@
 
         // QR Code Functions
         function showQRCode(topic) {
+            console.log('showQRCode called with topic:', topic);
+            
             const modal = document.getElementById('qrOverlay');
             const title = document.getElementById('qrTitle');
             const subtitle = document.getElementById('qrSubtitle');
             const canvas = document.getElementById('qrCanvas');
             
+            if (!modal || !title || !subtitle || !canvas) {
+                console.error('QR modal elements not found');
+                alert('QR code modal elements not found. Please refresh the page.');
+                return;
+            }
+            
             title.textContent = 'Scan for Mobile Access';
             subtitle.textContent = `${topic.name}: ${topic.description}`;
             
             // Create mobile lesson URL
-            const baseUrl = window.location.origin + window.location.pathname;
-            const mobileUrl = baseUrl.replace('.html', '') + `?mobile=true&lesson=${topic.id}&unit=${currentUnit.unitId}`;
+            const baseUrl = window.location.origin + window.location.pathname.replace('ap-stats-real-data.html', 'mobile-lesson.html');
+            const mobileUrl = baseUrl + `?mobile=true&lesson=${topic.id}&unit=${currentUnit.unitId}`;
+            
+            console.log('Generated mobile URL:', mobileUrl);
+            
+            // Set the test link
+            const testLink = document.getElementById('testMobileLink');
+            if (testLink) {
+                testLink.href = mobileUrl;
+            }
+            
+            // Show modal first
+            modal.style.display = 'flex';
+            
+            // Check if QRCode library is available
+            if (typeof QRCode === 'undefined' || window.QRCodeFallback) {
+                console.log('QRCode library not available, showing URL instead');
+                // Create a text-based alternative
+                canvas.style.display = 'none';
+                const urlDisplay = document.createElement('div');
+                urlDisplay.style.cssText = `
+                    background: #f5f5f5; 
+                    border: 2px dashed #2d5a2d; 
+                    padding: 15px; 
+                    border-radius: 10px; 
+                    word-break: break-all; 
+                    font-family: monospace; 
+                    font-size: 12px;
+                    line-height: 1.4;
+                `;
+                urlDisplay.innerHTML = `
+                    <strong style="color: #2d5a2d;">Mobile Lesson URL:</strong><br>
+                    <span style="color: #666;">${mobileUrl}</span><br><br>
+                    <small style="color: #888;">Copy this URL to your phone's browser or use the test link below.</small>
+                `;
+                canvas.parentNode.insertBefore(urlDisplay, canvas);
+                return;
+            }
             
             // Generate QR code
-            QRCode.toCanvas(canvas, mobileUrl, {
-                width: 200,
-                margin: 2,
-                color: {
-                    dark: '#2d5a2d',
-                    light: '#ffffff'
-                }
-            }, function (error) {
-                if (error) console.error('QR Code generation error:', error);
-            });
-            
-            modal.style.display = 'flex';
+            try {
+                QRCode.toCanvas(canvas, mobileUrl, {
+                    width: 200,
+                    margin: 2,
+                    color: {
+                        dark: '#2d5a2d',
+                        light: '#ffffff'
+                    }
+                }, function (error) {
+                    if (error) {
+                        console.error('QR Code generation error:', error);
+                        // Show text fallback on error
+                        canvas.style.display = 'none';
+                        const errorDiv = document.createElement('div');
+                        errorDiv.innerHTML = `
+                            <div style="background: #ffebee; border-radius: 8px; padding: 15px; color: #c62828;">
+                                <strong>QR Generation Failed</strong><br>
+                                <small>Use the test link below instead</small>
+                            </div>
+                        `;
+                        canvas.parentNode.insertBefore(errorDiv, canvas);
+                    } else {
+                        console.log('QR code generated successfully');
+                        canvas.style.display = 'block';
+                    }
+                });
+            } catch (e) {
+                console.error('QR Code library error:', e);
+                canvas.style.display = 'none';
+                const errorDiv = document.createElement('div');
+                errorDiv.innerHTML = `
+                    <div style="background: #ffebee; border-radius: 8px; padding: 15px; color: #c62828;">
+                        <strong>QR Library Error</strong><br>
+                        <small>Use the test link below</small>
+                    </div>
+                `;
+                canvas.parentNode.insertBefore(errorDiv, canvas);
+            }
         }
 
         function closeQRModal() {
-            document.getElementById('qrOverlay').style.display = 'none';
+            const modal = document.getElementById('qrOverlay');
+            const canvas = document.getElementById('qrCanvas');
+            const container = canvas.parentNode;
+            
+            // Clean up any previous content
+            const existingDivs = container.querySelectorAll('div:not(.qr-title):not(.qr-subtitle):not(.qr-instructions)');
+            existingDivs.forEach(div => div.remove());
+            
+            // Reset canvas
+            canvas.style.display = 'block';
+            canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+            
+            modal.style.display = 'none';
         }
 
         // Close QR modal when clicking outside
