@@ -247,36 +247,7 @@
             color: #2d5a2d;
         }
 
-        /* Progress Summary */
-        .progress-summary {
-            background: rgba(255,255,255,0.95);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px auto;
-            max-width: 800px;
-            color: #2d5a2d;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-        }
 
-        .progress-item {
-            text-align: center;
-            padding: 10px;
-            border-radius: 8px;
-            background: rgba(76, 175, 80, 0.1);
-        }
-
-        .progress-number {
-            font-size: 2em;
-            font-weight: bold;
-            color: #2E7D32;
-        }
-
-        .progress-label {
-            font-size: 0.9em;
-            color: #666;
-        }
 
         /* Mobile responsive */
         @media (max-width: 768px) {
@@ -311,10 +282,6 @@
             .lesson-path {
                 gap: 10px;
             }
-
-            .progress-summary {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
         @media (max-width: 480px) {
@@ -325,10 +292,6 @@
             .lesson-connector {
                 width: 4px;
                 height: 20px;
-            }
-
-            .progress-summary {
-                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -348,11 +311,7 @@
         <h2 class="world-title">SELECT UNIT</h2>
         
         <div class="instructions">
-            Complete units sequentially to unlock new content. Earn stars by maintaining your daily learning pace!
-        </div>
-
-        <div class="progress-summary" id="progressSummary">
-            <!-- Will be populated by JavaScript -->
+            Complete units sequentially to unlock new content. Navigate with arrow keys or click to select.
         </div>
 
         <div class="units-grid" id="unitsGrid">
@@ -514,48 +473,17 @@
                 unitBox.onclick = () => unit.isUnlocked && selectUnit(index);
                 
                 const unitNumber = parseInt(unit.unitId.replace('unit', ''));
-                const shortName = unit.displayName.replace(`Unit ${unitNumber}: `, '');
                 
                 unitBox.innerHTML = `
                     ${unit.isUnlocked ? `<div class="unit-progress">${unit.progress}</div>` : ''}
                     <div class="unit-number">${unitNumber}</div>
-                    <div class="unit-name">${shortName}</div>
-                    <div class="unit-weight">${unit.examWeight}</div>
                 `;
                 
                 grid.appendChild(unitBox);
             });
         }
 
-        // Generate progress summary
-        function generateProgressSummary() {
-            const summary = document.getElementById('progressSummary');
-            const totalLessons = getTotalLessonCount();
-            const completedCount = studentProgress.completedLessons.size;
-            const completionPercent = Math.round((completedCount / totalLessons) * 100);
-            
-            // Calculate streak (simplified for demo)
-            const currentStreak = 3; // Would be calculated from actual completion dates
-            
-            summary.innerHTML = `
-                <div class="progress-item">
-                    <div class="progress-number">${completedCount}</div>
-                    <div class="progress-label">Lessons Complete</div>
-                </div>
-                <div class="progress-item">
-                    <div class="progress-number">${completionPercent}%</div>
-                    <div class="progress-label">Total Progress</div>
-                </div>
-                <div class="progress-item">
-                    <div class="progress-number">${currentStreak}</div>
-                    <div class="progress-label">Day Streak</div>
-                </div>
-                <div class="progress-item">
-                    <div class="progress-number">${totalLessons - completedCount}</div>
-                    <div class="progress-label">Remaining</div>
-                </div>
-            `;
-        }
+
 
         // Select a unit
         function selectUnit(unitIndex) {
@@ -643,7 +571,6 @@
                 saveProgress();
                 initializeUnitsData();
                 generateUnitsGrid();
-                generateProgressSummary();
                 calculateNextDeadline();
                 
                 if (document.getElementById('lessonSelector').classList.contains('active')) {
@@ -736,7 +663,6 @@
             loadProgress();
             initializeUnitsData();
             generateUnitsGrid();
-            generateProgressSummary();
             calculateNextDeadline();
             updateSelectedUnit();
         });
