@@ -399,43 +399,57 @@
     <script>
         // Dynamic deadline calculation
         function calculateNextDeadline() {
-            const today = new Date();
-            const apExamDate = new Date('2026-05-07T08:00:00'); // May 7, 2026, 8am
-            const totalLessons = 78;
-            
-            // Calculate days until exam
-            const msPerDay = 24 * 60 * 60 * 1000;
-            const daysUntilExam = Math.ceil((apExamDate - today) / msPerDay);
-            
-            // Calculate pace (days per lesson)
-            const daysPerLesson = Math.floor(daysUntilExam / totalLessons);
-            
-            // Calculate next deadline
-            const nextDeadline = new Date(today);
-            nextDeadline.setDate(today.getDate() + daysPerLesson);
-            
-            // Format deadline as MM/DD/YYYY
-            const options = { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric',
-                weekday: 'long'
-            };
-            const formattedDate = nextDeadline.toLocaleDateString('en-US', options);
-            
-            // Update the display
-            document.getElementById('nextDeadline').textContent = formattedDate;
-            
-            // Also update the title to show current pace
-            const paceText = daysPerLesson === 1 ? '1 lesson daily' : `1 lesson every ${daysPerLesson} days`;
-            document.getElementById('dynamicGoal').innerHTML = `
-                Daily Goal: Complete next lesson by <span id="nextDeadline">${formattedDate}</span><br>
-                <small style="opacity: 0.8;">${paceText} • ${daysUntilExam} days until AP exam</small>
-            `;
+            try {
+                const today = new Date();
+                const apExamDate = new Date(2026, 4, 7); // May 7, 2026 (month is 0-indexed)
+                const totalLessons = 78;
+                
+                // Calculate days until exam
+                const msPerDay = 24 * 60 * 60 * 1000;
+                const daysUntilExam = Math.ceil((apExamDate - today) / msPerDay);
+                
+                // Calculate pace (days per lesson)
+                const daysPerLesson = Math.max(1, Math.floor(daysUntilExam / totalLessons));
+                
+                // Calculate next deadline
+                const nextDeadline = new Date(today);
+                nextDeadline.setDate(today.getDate() + daysPerLesson);
+                
+                // Format deadline - simpler approach
+                const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                
+                const dayName = days[nextDeadline.getDay()];
+                const monthName = months[nextDeadline.getMonth()];
+                const dayNumber = nextDeadline.getDate();
+                const year = nextDeadline.getFullYear();
+                
+                const formattedDate = `${dayName}, ${monthName} ${dayNumber}, ${year}`;
+                
+                // Update the display
+                const goalElement = document.getElementById('dynamicGoal');
+                if (goalElement) {
+                    const paceText = daysPerLesson === 1 ? '1 lesson daily' : `1 lesson every ${daysPerLesson} days`;
+                    goalElement.innerHTML = `
+                        Daily Goal: Complete next lesson by <strong>${formattedDate}</strong><br>
+                        <small style="opacity: 0.8;">${paceText} • ${daysUntilExam} days until AP exam • ${totalLessons} total lessons</small>
+                    `;
+                }
+                
+                console.log('Deadline calculated:', formattedDate, '| Days per lesson:', daysPerLesson, '| Days until exam:', daysUntilExam);
+                
+            } catch (error) {
+                console.error('Error calculating deadline:', error);
+                // Fallback display
+                const goalElement = document.getElementById('dynamicGoal');
+                if (goalElement) {
+                    goalElement.innerHTML = 'Daily Goal: Complete next lesson by Friday, January 12, 2025 • 78 total lessons';
+                }
+            }
         }
 
-        // Initialize deadline calculation on page load
-        document.addEventListener('DOMContentLoaded', calculateNextDeadline);
+        // Initialize deadline calculation when page loads
+        window.addEventListener('load', calculateNextDeadline);
 
         // Simple navigation for mockup
         function selectUnit(unitNumber) {
