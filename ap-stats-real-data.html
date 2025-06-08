@@ -1136,11 +1136,11 @@
                     <div class="video-item ${isWatched ? 'completed' : ''}">
                         <div class="video-title">${video.title || `Video ${index + 1}`}</div>
                         <div class="video-links">
-                            <a href="${video.ap_classroom_url}" target="_blank" class="video-link" onclick="markVideoWatched(${index})">
+                            <a href="${video.url}" target="_blank" class="video-link" onclick="markVideoWatched(${index})">
                                 🎓 AP Classroom
                             </a>
-                            ${video.google_drive_url ? `
-                                <a href="${video.google_drive_url}" target="_blank" class="video-link alt" onclick="markVideoWatched(${index})">
+                            ${video.altUrl ? `
+                                <a href="${video.altUrl}" target="_blank" class="video-link alt" onclick="markVideoWatched(${index})">
                                     📁 Google Drive
                                 </a>
                             ` : ''}
@@ -1173,10 +1173,15 @@
                     <div class="quiz-item ${isCompleted ? 'completed' : ''}">
                         <div class="quiz-title">${quiz.title || `Practice Quiz ${index + 1}`}</div>
                         <div class="quiz-actions">
-                            <a href="${quiz.url}" target="_blank" class="quiz-btn download">
-                                📄 Download PDF
+                            <a href="${quiz.questionPdf}" target="_blank" class="quiz-btn download">
+                                📄 Download Questions
                             </a>
-                            <button class="quiz-btn grok" onclick="openGrokIntegration('${quiz.url}', ${index})">
+                            ${quiz.answersPdf ? `
+                                <a href="${quiz.answersPdf}" target="_blank" class="quiz-btn download" style="background: #4CAF50;">
+                                    ✅ Download Answers
+                                </a>
+                            ` : ''}
+                            <button class="quiz-btn grok" onclick="openGrokIntegration('${quiz.questionPdf}', ${index})">
                                 🤖 Open in Grok
                             </button>
                         </div>
