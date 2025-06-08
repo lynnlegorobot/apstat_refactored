@@ -90,6 +90,11 @@
             opacity: 0.6;
         }
 
+        .unit-box.selected {
+            box-shadow: 0 0 0 4px #FFD54F, 0 8px 16px rgba(0,0,0,0.3);
+            transform: translateY(-8px) scale(1.02);
+        }
+
         .unit-number {
             font-size: 3em;
             font-weight: bold;
@@ -454,13 +459,19 @@
         }
 
         // Initialize deadline calculation when page loads
-        window.addEventListener('load', calculateNextDeadline);
+        window.addEventListener('load', function() {
+            calculateNextDeadline();
+            // Initialize unit selection
+            updateSelectedUnit();
+        });
 
         // Navigation functions
 
         function backToUnits() {
             document.getElementById('lessonSelector').classList.remove('active');
             document.getElementById('unitSelector').style.display = 'block';
+            // Reset unit selection highlighting
+            setTimeout(updateSelectedUnit, 100);
         }
 
         function selectLesson(lessonId) {
@@ -472,16 +483,21 @@
 
         // Keyboard navigation simulation
         let currentLessonIndex = 3; // Currently on lesson 4 (0-indexed = 3)
+        let currentUnitIndex = 0; // Currently on unit 1 (0-indexed = 0)
         const maxLessons = 11; // Total lessons in unit (including capstone)
+        const maxUnits = 9; // Total units
+        const unlockedUnits = 2; // Currently units 1 and 2 are unlocked
         
         document.addEventListener('keydown', function(e) {
-            // Only handle navigation if we're on the lesson selector screen
             const lessonSelector = document.getElementById('lessonSelector');
+            const unitSelector = document.getElementById('unitSelector');
             const isOnLessonScreen = lessonSelector.classList.contains('active');
+            const isOnUnitScreen = unitSelector.style.display !== 'none';
             
-            if (e.key === 'ArrowUp') {
+            if (e.key === 'ArrowUp' && isOnLessonScreen) {
                 backToUnits();
             } else if (isOnLessonScreen) {
+                // Lesson screen navigation
                 if (e.key === 'ArrowRight') {
                     // Move to next lesson (if unlocked)
                     if (currentLessonIndex < 3) { // Can only go up to current lesson (lesson 4, index 3)
@@ -499,6 +515,24 @@
                     const currentLesson = getCurrentLessonId();
                     selectLesson(currentLesson);
                 }
+            } else if (isOnUnitScreen) {
+                // Unit screen navigation
+                if (e.key === 'ArrowRight') {
+                    // Move to next unit (if unlocked)
+                    if (currentUnitIndex < unlockedUnits - 1) {
+                        currentUnitIndex++;
+                        updateSelectedUnit();
+                    }
+                } else if (e.key === 'ArrowLeft') {
+                    // Move to previous unit
+                    if (currentUnitIndex > 0) {
+                        currentUnitIndex--;
+                        updateSelectedUnit();
+                    }
+                } else if (e.key === 'Enter' || e.key === ' ') {
+                    // Enter/Space to select current unit
+                    selectUnit(currentUnitIndex + 1); // Convert to 1-indexed
+                }
             }
         });
 
@@ -513,6 +547,20 @@
             if (lessonBoxes[currentLessonIndex]) {
                 lessonBoxes[currentLessonIndex].classList.add('selected');
                 lessonBoxes[currentLessonIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function updateSelectedUnit() {
+            // Remove previous highlighting
+            document.querySelectorAll('.unit-box').forEach(box => {
+                box.classList.remove('selected');
+            });
+            
+            // Add selection highlight to current unit
+            const unitBoxes = document.querySelectorAll('.unit-box:not(.locked)');
+            if (unitBoxes[currentUnitIndex]) {
+                unitBoxes[currentUnitIndex].classList.add('selected');
+                unitBoxes[currentUnitIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
 
