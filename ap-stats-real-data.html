@@ -580,6 +580,8 @@
                 calculateNextDeadline();
                 
                 if (document.getElementById('lessonSelector').classList.contains('active')) {
+                    // Update currentUnit reference to the newly initialized data
+                    currentUnit = unitsData[currentUnitIndex];
                     generateLessonPath();
                 }
             }
