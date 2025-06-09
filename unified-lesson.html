@@ -67,9 +67,9 @@
 
         .bookmark-btn {
             background: none;
-            border: 2px solid #FFD54F;
-            color: #FFD54F;
-            font-size: 1em;
+            border: 2px solid #4CAF50;
+            color: #4CAF50;
+            font-size: 1.2em;
             cursor: pointer;
             transition: all 0.3s ease;
             padding: 8px 12px;
@@ -78,14 +78,15 @@
         }
 
         .bookmark-btn:hover, .bookmark-btn:focus {
-            background: #FFD54F;
-            color: #2d5a2d;
+            border-color: #FFD54F;
+            color: #FFD54F;
             outline: none;
         }
 
         .bookmark-btn.bookmarked {
             background: #FFD54F;
             color: #2d5a2d;
+            border-color: #FFD54F;
         }
 
         .lesson-main-description {
@@ -264,16 +265,19 @@
             right: 10px;
             background: none;
             border: none;
-            font-size: 1.2em;
+            font-size: 1.4em;
             cursor: pointer;
             padding: 5px;
             border-radius: 5px;
             transition: all 0.3s ease;
+            color: #4CAF50;
+            font-family: monospace;
         }
 
         .video-completion-toggle:hover, .video-completion-toggle:focus {
-            background: rgba(255, 213, 79, 0.3);
-            outline: 2px solid #FFD54F;
+            background: rgba(76, 175, 80, 0.2);
+            outline: 2px solid #4CAF50;
+            transform: scale(1.1);
         }
 
         .item-bookmark-btn {
@@ -281,9 +285,9 @@
             top: 10px;
             right: 50px;
             background: none;
-            border: 2px solid #FFD54F;
-            color: #FFD54F;
-            font-size: 1em;
+            border: 2px solid #4CAF50;
+            color: #4CAF50;
+            font-size: 1.1em;
             cursor: pointer;
             padding: 4px 8px;
             border-radius: 5px;
@@ -292,14 +296,15 @@
         }
 
         .item-bookmark-btn:hover, .item-bookmark-btn:focus {
-            background: #FFD54F;
-            color: #2d5a2d;
+            border-color: #FFD54F;
+            color: #FFD54F;
             outline: none;
         }
 
         .item-bookmark-btn.bookmarked {
             background: #FFD54F;
             color: #2d5a2d;
+            border-color: #FFD54F;
         }
 
         /* Quiz Items */
@@ -395,16 +400,19 @@
             right: 10px;
             background: none;
             border: none;
-            font-size: 1.2em;
+            font-size: 1.4em;
             cursor: pointer;
             padding: 5px;
             border-radius: 5px;
             transition: all 0.3s ease;
+            color: #4CAF50;
+            font-family: monospace;
         }
 
         .quiz-completion-toggle:hover, .quiz-completion-toggle:focus {
-            background: rgba(255, 213, 79, 0.3);
-            outline: 2px solid #FFD54F;
+            background: rgba(76, 175, 80, 0.2);
+            outline: 2px solid #4CAF50;
+            transform: scale(1.1);
         }
 
         /* Completion Card */
@@ -432,7 +440,7 @@
             border: none;
             padding: 15px 30px;
             border-radius: 8px;
-            font-size: 1.1em;
+            font-size: 1.2em;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -442,7 +450,7 @@
 
         .completion-btn:hover, .completion-btn:focus {
             background: #45a049;
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.05);
             outline: none;
             border-color: #FFD54F;
             box-shadow: 0 0 0 3px rgba(255, 213, 79, 0.6);
@@ -593,7 +601,7 @@
                             <h3>Great work! Ready to complete this lesson?</h3>
                             <p>Make sure you've watched all videos and attempted the practice quizzes.</p>
                         </div>
-                        <button class="completion-btn" id="completionBtn">🎯 Complete Lesson</button>
+                        <button class="completion-btn" id="completionBtn">■ Complete Lesson</button>
                     </div>
                 </div>
             </div>
@@ -678,7 +686,7 @@
                 return `
                     <div class="video-item" data-index="${index}">
                         <button class="video-completion-toggle" onclick="toggleVideoCompletion(${index})">
-                            ${isWatched ? '🟢' : '🟡'}
+                            ${isWatched ? '■' : '□'}
                         </button>
                         <button class="item-bookmark-btn" onclick="bookmarkVideo(${index})" title="Bookmark this video">
                             ${isVideoBookmarked(index) ? '★' : '☆'}
@@ -708,7 +716,7 @@
                 return `
                     <div class="quiz-item" data-index="${index}">
                         <button class="quiz-completion-toggle" onclick="toggleQuizCompletion(${index})">
-                            ${isCompleted ? '🟢' : '🟡'}
+                            ${isCompleted ? '■' : '□'}
                         </button>
                         <button class="item-bookmark-btn" onclick="bookmarkQuiz(${index})" title="Bookmark this quiz">
                             ${isQuizBookmarked(index) ? '★' : '☆'}
@@ -805,16 +813,20 @@
         }
 
         function toggleBookmark() {
-            const bookmarks = JSON.parse(localStorage.getItem('bookmarked_lessons') || '[]');
             if (isBookmarked) {
-                const index = bookmarks.indexOf(currentLessonData.id);
-                if (index > -1) bookmarks.splice(index, 1);
+                // Remove current bookmark
+                localStorage.removeItem('bookmarked_lessons');
+                localStorage.removeItem('item_bookmarks');
+                isBookmarked = false;
             } else {
-                bookmarks.push(currentLessonData.id);
+                // Clear all existing bookmarks and set this one
+                localStorage.setItem('bookmarked_lessons', JSON.stringify([currentLessonData.id]));
+                localStorage.removeItem('item_bookmarks');
+                isBookmarked = true;
             }
-            isBookmarked = !isBookmarked;
-            localStorage.setItem('bookmarked_lessons', JSON.stringify(bookmarks));
             updateInterface();
+            populateVideos(); // Refresh to update bookmark displays
+            populateQuizzes(); // Refresh to update bookmark displays
         }
 
         // Individual item bookmarks
@@ -853,21 +865,26 @@
             );
             
             if (existingIndex > -1) {
-                bookmarks.splice(existingIndex, 1);
+                // Remove this bookmark
+                localStorage.removeItem('item_bookmarks');
+                localStorage.removeItem('bookmarked_lessons');
             } else {
+                // Clear all existing bookmarks and set this one
                 const video = currentLessonData.videos[videoIndex];
-                bookmarks.push({
+                const newBookmark = [{
                     lessonId: currentLessonData.id,
                     lessonName: currentLessonData.name,
                     type: 'video',
                     index: videoIndex,
                     title: video.title || `Video ${videoIndex + 1}`,
                     timestamp: Date.now()
-                });
+                }];
+                localStorage.setItem('item_bookmarks', JSON.stringify(newBookmark));
+                localStorage.removeItem('bookmarked_lessons');
             }
-            
-            saveItemBookmarks(bookmarks);
             populateVideos(); // Refresh to update bookmark display
+            populateQuizzes(); // Refresh to update bookmark display
+            updateInterface(); // Update lesson bookmark display
         }
 
         function bookmarkQuiz(quizIndex) {
@@ -879,21 +896,26 @@
             );
             
             if (existingIndex > -1) {
-                bookmarks.splice(existingIndex, 1);
+                // Remove this bookmark
+                localStorage.removeItem('item_bookmarks');
+                localStorage.removeItem('bookmarked_lessons');
             } else {
+                // Clear all existing bookmarks and set this one
                 const quiz = currentLessonData.quizzes[quizIndex];
-                bookmarks.push({
+                const newBookmark = [{
                     lessonId: currentLessonData.id,
                     lessonName: currentLessonData.name,
                     type: 'quiz',
                     index: quizIndex,
                     title: quiz.title || `Practice Quiz ${quizIndex + 1}`,
                     timestamp: Date.now()
-                });
+                }];
+                localStorage.setItem('item_bookmarks', JSON.stringify(newBookmark));
+                localStorage.removeItem('bookmarked_lessons');
             }
-            
-            saveItemBookmarks(bookmarks);
+            populateVideos(); // Refresh to update bookmark display
             populateQuizzes(); // Refresh to update bookmark display
+            updateInterface(); // Update lesson bookmark display
         }
 
         function toggleVideoCompletion(index) {
@@ -927,7 +949,7 @@
             
             if (currentLessonProgress.lessonCompleted) {
                 updateMainAppProgress();
-                alert(`🎉 Congratulations! You've completed: ${currentLessonData.name}\n\nGreat job! Keep up the momentum!`);
+                alert(`■ Congratulations! You've completed: ${currentLessonData.name}\n\nGreat job! Keep up the momentum!`);
             }
         }
 
