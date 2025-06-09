@@ -65,29 +65,7 @@
             gap: 10px;
         }
 
-        .bookmark-btn {
-            background: none;
-            border: 2px solid #4CAF50;
-            color: #4CAF50;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-family: monospace;
-        }
 
-        .bookmark-btn:hover, .bookmark-btn:focus {
-            border-color: #FFD54F;
-            color: #FFD54F;
-            outline: none;
-        }
-
-        .bookmark-btn.bookmarked {
-            background: #FFD54F;
-            color: #2d5a2d;
-            border-color: #FFD54F;
-        }
 
         .lesson-main-description {
             opacity: 0.9;
@@ -302,8 +280,8 @@
         }
 
         .item-bookmark-btn.bookmarked {
-            background: #FFD54F;
-            color: #2d5a2d;
+            background: none;
+            color: #FFD54F;
             border-color: #FFD54F;
         }
 
@@ -560,7 +538,7 @@
             <div class="lesson-info">
                 <h1 class="lesson-main-title" id="lessonMainTitle">
                     <span id="lessonTitleText">Topic 1.1</span>
-                    <button class="bookmark-btn" id="bookmarkBtn" title="Bookmark this lesson">☆</button>
+    
                 </h1>
                 <p class="lesson-main-description" id="lessonMainDescription">Loading...</p>
             </div>
@@ -661,8 +639,8 @@
             const saved = localStorage.getItem(`lesson_progress_${currentLessonData.id}`);
             if (saved) currentLessonProgress = JSON.parse(saved);
             
-            const bookmarks = JSON.parse(localStorage.getItem('bookmarked_lessons') || '[]');
-            isBookmarked = bookmarks.includes(currentLessonData.id);
+            // Individual item bookmarks only - no main lesson bookmark
+            isBookmarked = false;
         }
 
         function populateInterface() {
@@ -784,10 +762,7 @@
                 }
             }
             
-            // Update bookmark
-            const bookmark = document.getElementById('bookmarkBtn');
-            bookmark.textContent = isBookmarked ? '★' : '☆';
-            bookmark.className = `bookmark-btn ${isBookmarked ? 'bookmarked' : ''}`;
+            // Lesson bookmark removed - individual item bookmarks only
         }
 
         function calculateProgress() {
@@ -799,7 +774,6 @@
         }
 
         function setupEventListeners() {
-            document.getElementById('bookmarkBtn').onclick = toggleBookmark;
             document.getElementById('backBtn').onclick = goBack;
             document.getElementById('completionBtn').onclick = toggleLessonCompletion;
             document.addEventListener('keydown', handleKeyboard);
@@ -812,22 +786,7 @@
             }, 1000);
         }
 
-        function toggleBookmark() {
-            if (isBookmarked) {
-                // Remove current bookmark
-                localStorage.removeItem('bookmarked_lessons');
-                localStorage.removeItem('item_bookmarks');
-                isBookmarked = false;
-            } else {
-                // Clear all existing bookmarks and set this one
-                localStorage.setItem('bookmarked_lessons', JSON.stringify([currentLessonData.id]));
-                localStorage.removeItem('item_bookmarks');
-                isBookmarked = true;
-            }
-            updateInterface();
-            populateVideos(); // Refresh to update bookmark displays
-            populateQuizzes(); // Refresh to update bookmark displays
-        }
+
 
         // Individual item bookmarks
         function getItemBookmarks() {
