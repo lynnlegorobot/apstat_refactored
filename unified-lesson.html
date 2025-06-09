@@ -67,23 +67,25 @@
 
         .bookmark-btn {
             background: none;
-            border: none;
+            border: 2px solid #FFD54F;
             color: #FFD54F;
-            font-size: 1.2em;
+            font-size: 1em;
             cursor: pointer;
             transition: all 0.3s ease;
-            padding: 5px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-family: monospace;
         }
 
         .bookmark-btn:hover, .bookmark-btn:focus {
-            transform: scale(1.2);
-            outline: 2px solid #FFD54F;
-            border-radius: 5px;
+            background: #FFD54F;
+            color: #2d5a2d;
+            outline: none;
         }
 
         .bookmark-btn.bookmarked {
-            color: #FFD54F;
-            text-shadow: 0 0 10px #FFD54F;
+            background: #FFD54F;
+            color: #2d5a2d;
         }
 
         .lesson-main-description {
@@ -220,7 +222,7 @@
             flex-wrap: wrap;
         }
 
-        .video-link {
+        .video-link, .quiz-btn {
             background: #4CAF50;
             color: white;
             padding: 10px 20px;
@@ -232,26 +234,28 @@
             align-items: center;
             gap: 8px;
             border: 2px solid transparent;
+            font-family: monospace;
+            font-size: 0.9em;
         }
 
-        .video-link:hover, .video-link:focus {
+        .video-link:hover, .video-link:focus, .quiz-btn:hover, .quiz-btn:focus {
             background: #45a049;
             transform: translateY(-2px);
             outline: none;
         }
 
-        .video-link.focused {
+        .video-link.focused, .quiz-btn.focused {
             border-color: #FFD54F;
             box-shadow: 0 0 0 3px rgba(255, 213, 79, 0.6);
             background: #45a049 !important;
         }
 
         .video-link.alt {
-            background: #2196F3;
+            background: #388E3C;
         }
 
         .video-link.alt:hover, .video-link.alt:focus {
-            background: #1976D2;
+            background: #2E7D32;
         }
 
         .video-completion-toggle {
@@ -274,17 +278,17 @@
 
         /* Quiz Items */
         .quiz-item {
-            background: #fff3e0;
+            background: #f5f5f5;
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 15px;
-            border-left: 4px solid #FF7043;
+            border-left: 4px solid #4CAF50;
             transition: all 0.3s ease;
             position: relative;
         }
 
         .quiz-item:hover {
-            background: #fff8f0;
+            background: #f0f8f0;
             transform: translateX(5px);
         }
 
@@ -319,6 +323,8 @@
             align-items: center;
             gap: 8px;
             border: 2px solid transparent;
+            font-family: monospace;
+            font-size: 0.9em;
         }
 
         .quiz-btn:focus, .quiz-btn.focused {
@@ -328,32 +334,32 @@
         }
 
         .quiz-btn.download {
-            background: #FF7043;
-            color: white;
-        }
-
-        .quiz-btn.download:hover, .quiz-btn.download:focus {
-            background: #E64A19;
-            transform: translateY(-2px);
-        }
-
-        .quiz-btn.answers {
             background: #4CAF50;
             color: white;
         }
 
-        .quiz-btn.answers:hover, .quiz-btn.answers:focus {
+        .quiz-btn.download:hover, .quiz-btn.download:focus {
             background: #45a049;
             transform: translateY(-2px);
         }
 
+        .quiz-btn.answers {
+            background: #388E3C;
+            color: white;
+        }
+
+        .quiz-btn.answers:hover, .quiz-btn.answers:focus {
+            background: #2E7D32;
+            transform: translateY(-2px);
+        }
+
         .quiz-btn.grok {
-            background: #2196F3;
+            background: #2E7D32;
             color: white;
         }
 
         .quiz-btn.grok:hover, .quiz-btn.grok:focus {
-            background: #1976D2;
+            background: #1B5E20;
             transform: translateY(-2px);
         }
 
@@ -395,21 +401,22 @@
         }
 
         .completion-btn {
-            background: white;
-            color: #4CAF50;
+            background: #4CAF50;
+            color: white;
             border: none;
             padding: 15px 30px;
-            border-radius: 25px;
+            border-radius: 8px;
             font-size: 1.1em;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid transparent;
+            font-family: monospace;
         }
 
         .completion-btn:hover, .completion-btn:focus {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            background: #45a049;
+            transform: translateY(-2px);
             outline: none;
             border-color: #FFD54F;
             box-shadow: 0 0 0 3px rgba(255, 213, 79, 0.6);
@@ -650,9 +657,9 @@
                         <div class="video-title">${video.title || `Video ${index + 1}`}</div>
                         <div class="video-links">
                             <a href="${video.url}" target="_blank" class="video-link" onclick="markVideoWatched(${index})">
-                                🎓 AP Classroom
+                                AP Classroom
                             </a>
-                            ${video.altUrl ? `<a href="${video.altUrl}" target="_blank" class="video-link alt" onclick="markVideoWatched(${index})">📁 Alternate Link</a>` : ''}
+                            ${video.altUrl ? `<a href="${video.altUrl}" target="_blank" class="video-link alt" onclick="markVideoWatched(${index})">Alternate Link</a>` : ''}
                         </div>
                         ${isWatched ? '<div class="status-indicator">✅ Watched</div>' : ''}
                     </div>
@@ -676,9 +683,9 @@
                         </button>
                         <div class="quiz-title">${quiz.title || `Practice Quiz ${index + 1}`}</div>
                         <div class="quiz-actions">
-                            <a href="${quiz.questionPdf}" target="_blank" class="quiz-btn download">📄 Download Questions</a>
-                            ${quiz.answersPdf ? `<a href="${quiz.answersPdf}" target="_blank" class="quiz-btn answers">✅ Download Answers</a>` : ''}
-                            <button class="quiz-btn grok" onclick="openGrok('${quiz.questionPdf}', ${index})">🤖 Open in Grok</button>
+                            <a href="${quiz.questionPdf}" target="_blank" class="quiz-btn download">Questions</a>
+                            ${quiz.answersPdf ? `<a href="${quiz.answersPdf}" target="_blank" class="quiz-btn answers">Answers</a>` : ''}
+                            <button class="quiz-btn grok" onclick="openGrok('${quiz.questionPdf}', ${index})">AI Help</button>
                         </div>
                         ${isCompleted ? '<div class="status-indicator">✅ Completed</div>' : ''}
                     </div>
@@ -718,19 +725,19 @@
             
             if (!allVideosWatched || !allQuizzesCompleted) {
                 completionSection.classList.add('locked');
-                btn.textContent = '🔒 Complete Prerequisites';
+                btn.textContent = 'LOCKED - Complete Prerequisites';
                 status.textContent = 'Locked';
                 status.style.background = '#f5f5f5';
                 status.style.color = '#999';
             } else {
                 completionSection.classList.remove('locked');
                 if (currentLessonProgress.lessonCompleted) {
-                    btn.textContent = '✅ Lesson Complete';
+                    btn.textContent = 'LESSON COMPLETE';
                     status.textContent = 'Completed';
                     status.style.background = '#4CAF50';
                     status.style.color = 'white';
                 } else {
-                    btn.textContent = '🎯 Complete Lesson';
+                    btn.textContent = 'COMPLETE LESSON';
                     status.textContent = 'Ready';
                     status.style.background = '#e3f2fd';
                     status.style.color = '#1976d2';
