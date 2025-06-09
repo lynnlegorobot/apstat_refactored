@@ -26,6 +26,7 @@
             text-align: center;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
         }
 
         .game-title {
@@ -43,6 +44,36 @@
             display: inline-block;
             font-size: 1.1em;
             margin-top: 10px;
+        }
+
+        /* Bookmark button */
+        .bookmark-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: 2px solid #4CAF50;
+            color: #4CAF50;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            font-weight: bold;
+            font-family: monospace;
+            display: none;
+        }
+
+        .bookmark-button:hover, .bookmark-button:focus {
+            border-color: #FFD54F;
+            color: #FFD54F;
+            background: rgba(255, 213, 79, 0.1);
+            transform: translateY(-2px);
+            outline: none;
+        }
+
+        .bookmark-button.show {
+            display: block;
         }
 
         /* Unit selector screen */
@@ -714,6 +745,9 @@
 
     <!-- Header -->
     <div class="game-header">
+        <button class="bookmark-button" id="bookmarkButton" onclick="goToBookmark()">
+            ★ GO TO BOOKMARK
+        </button>
         <div class="game-title">AP STATISTICS</div>
         <div class="daily-goal" id="dynamicGoal">Loading progress...</div>
     </div>
@@ -785,6 +819,98 @@
                 const data = JSON.parse(saved);
                 studentProgress.completedLessons = new Set(data.completedLessons || []);
                 studentProgress.currentLesson = data.currentLesson || '1-1';
+            }
+        }
+
+        // Bookmark management functions
+        function checkBookmarkExists() {
+            // Check for lesson bookmarks
+            const lessonBookmarks = JSON.parse(localStorage.getItem('bookmarked_lessons') || '[]');
+            if (lessonBookmarks.length > 0) {
+                return { type: 'lesson', id: lessonBookmarks[0] };
+            }
+            
+            // Check for item bookmarks (video/quiz)
+            const itemBookmarks = JSON.parse(localStorage.getItem('item_bookmarks') || '[]');
+            if (itemBookmarks.length > 0) {
+                return { type: 'item', data: itemBookmarks[0] };
+            }
+            
+            return null;
+        }
+
+        function updateBookmarkButton() {
+            const bookmarkBtn = document.getElementById('bookmarkButton');
+            const bookmark = checkBookmarkExists();
+            
+            if (bookmark) {
+                bookmarkBtn.classList.add('show');
+                if (bookmark.type === 'lesson') {
+                    // Extract lesson number from ID (e.g., "1-7" from lesson ID)
+                    const lessonNumber = bookmark.id.replace('unit', '').replace('-', '.');
+                    bookmarkBtn.innerHTML = `★ ${lessonNumber} LESSON`;
+                } else {
+                    // Create descriptive text for item bookmarks
+                    const itemData = bookmark.data;
+                    const lessonNumber = itemData.lessonId.replace('unit', '').replace('-', '.');
+                    
+                    let description = '';
+                    if (itemData.type === 'video') {
+                        // Check if it's alternate video or main video
+                        if (itemData.title && itemData.title.toLowerCase().includes('alt')) {
+                            description = 'ALTERNATE VIDEO';
+                        } else {
+                            description = 'VIDEO';
+                        }
+                    } else if (itemData.type === 'quiz') {
+                        // Check if it's answers or questions
+                        if (itemData.title && itemData.title.toLowerCase().includes('answer')) {
+                            description = 'QUIZ ANSWERS';
+                        } else {
+                            description = 'QUIZ';
+                        }
+                    }
+                    
+                    bookmarkBtn.innerHTML = `★ ${lessonNumber} ${description}`;
+                }
+            } else {
+                bookmarkBtn.classList.remove('show');
+            }
+        }
+
+        function getUnitForLesson(lessonId) {
+            // Find which unit contains this lesson
+            for (const unit of ALL_UNITS_DATA) {
+                if (unit.topics.some(topic => topic.id === lessonId)) {
+                    return unit.unitId;
+                }
+            }
+            return null;
+        }
+
+        function goToBookmark() {
+            const bookmark = checkBookmarkExists();
+            if (!bookmark) return;
+            
+            if (bookmark.type === 'lesson') {
+                // Navigate directly to lesson
+                const unitId = getUnitForLesson(bookmark.id);
+                if (!unitId) {
+                    alert('Could not find unit for this lesson. Please try again.');
+                    return;
+                }
+                const lessonUrl = `unified-lesson.html?lesson=${bookmark.id}&unit=${unitId}&mobile=false`;
+                window.location.href = lessonUrl;
+            } else {
+                // Navigate to lesson (the lesson page will handle highlighting the bookmarked item)
+                const itemData = bookmark.data;
+                const unitId = getUnitForLesson(itemData.lessonId);
+                if (!unitId) {
+                    alert('Could not find unit for this lesson. Please try again.');
+                    return;
+                }
+                const lessonUrl = `unified-lesson.html?lesson=${itemData.lessonId}&unit=${unitId}&mobile=false`;
+                window.location.href = lessonUrl;
             }
         }
 
@@ -1473,6 +1599,7 @@
             generateUnitsGrid();
             calculateNextDeadline();
             updateSelectedUnit();
+            updateBookmarkButton(); // Initialize bookmark button
             
             // Check URL parameters for direct navigation
             const urlParams = new URLSearchParams(window.location.search);
