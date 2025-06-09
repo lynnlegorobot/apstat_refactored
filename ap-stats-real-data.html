@@ -252,19 +252,24 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            background: #FF7043;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
+            background: none;
+            border: 2px solid #4CAF50;
+            color: #4CAF50;
+            padding: 10px 15px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
             transition: all 0.3s ease;
+            font-size: 1em;
+            font-weight: bold;
+            font-family: monospace;
         }
 
-        .back-button:hover {
-            background: #E64A19;
+        .back-button:hover, .back-button:focus {
+            border-color: #FFD54F;
+            color: #FFD54F;
+            background: rgba(255, 213, 79, 0.1);
             transform: translateY(-2px);
+            outline: none;
         }
 
         /* Instructions */
