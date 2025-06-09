@@ -276,6 +276,32 @@
             outline: 2px solid #FFD54F;
         }
 
+        .item-bookmark-btn {
+            position: absolute;
+            top: 10px;
+            right: 50px;
+            background: none;
+            border: 2px solid #FFD54F;
+            color: #FFD54F;
+            font-size: 1em;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: monospace;
+        }
+
+        .item-bookmark-btn:hover, .item-bookmark-btn:focus {
+            background: #FFD54F;
+            color: #2d5a2d;
+            outline: none;
+        }
+
+        .item-bookmark-btn.bookmarked {
+            background: #FFD54F;
+            color: #2d5a2d;
+        }
+
         /* Quiz Items */
         .quiz-item {
             background: #f5f5f5;
@@ -652,7 +678,10 @@
                 return `
                     <div class="video-item" data-index="${index}">
                         <button class="video-completion-toggle" onclick="toggleVideoCompletion(${index})">
-                            ${isWatched ? '✅' : '⭕'}
+                            ${isWatched ? '🟢' : '🟡'}
+                        </button>
+                        <button class="item-bookmark-btn" onclick="bookmarkVideo(${index})" title="Bookmark this video">
+                            ${isVideoBookmarked(index) ? '★' : '☆'}
                         </button>
                         <div class="video-title">${video.title || `Video ${index + 1}`}</div>
                         <div class="video-links">
@@ -661,7 +690,7 @@
                             </a>
                             ${video.altUrl ? `<a href="${video.altUrl}" target="_blank" class="video-link alt" onclick="markVideoWatched(${index})">Alternate Link</a>` : ''}
                         </div>
-                        ${isWatched ? '<div class="status-indicator">✅ Watched</div>' : ''}
+
                     </div>
                 `;
             }).join('');
@@ -679,7 +708,10 @@
                 return `
                     <div class="quiz-item" data-index="${index}">
                         <button class="quiz-completion-toggle" onclick="toggleQuizCompletion(${index})">
-                            ${isCompleted ? '✅' : '⭕'}
+                            ${isCompleted ? '🟢' : '🟡'}
+                        </button>
+                        <button class="item-bookmark-btn" onclick="bookmarkQuiz(${index})" title="Bookmark this quiz">
+                            ${isQuizBookmarked(index) ? '★' : '☆'}
                         </button>
                         <div class="quiz-title">${quiz.title || `Practice Quiz ${index + 1}`}</div>
                         <div class="quiz-actions">
@@ -687,7 +719,7 @@
                             ${quiz.answersPdf ? `<a href="${quiz.answersPdf}" target="_blank" class="quiz-btn answers">Answers</a>` : ''}
                             <button class="quiz-btn grok" onclick="openGrok('${quiz.questionPdf}', ${index})">AI Help</button>
                         </div>
-                        ${isCompleted ? '<div class="status-indicator">✅ Completed</div>' : ''}
+
                     </div>
                 `;
             }).join('');
@@ -783,6 +815,85 @@
             isBookmarked = !isBookmarked;
             localStorage.setItem('bookmarked_lessons', JSON.stringify(bookmarks));
             updateInterface();
+        }
+
+        // Individual item bookmarks
+        function getItemBookmarks() {
+            return JSON.parse(localStorage.getItem('item_bookmarks') || '[]');
+        }
+
+        function saveItemBookmarks(bookmarks) {
+            localStorage.setItem('item_bookmarks', JSON.stringify(bookmarks));
+        }
+
+        function isVideoBookmarked(videoIndex) {
+            const bookmarks = getItemBookmarks();
+            return bookmarks.some(b => 
+                b.lessonId === currentLessonData.id && 
+                b.type === 'video' && 
+                b.index === videoIndex
+            );
+        }
+
+        function isQuizBookmarked(quizIndex) {
+            const bookmarks = getItemBookmarks();
+            return bookmarks.some(b => 
+                b.lessonId === currentLessonData.id && 
+                b.type === 'quiz' && 
+                b.index === quizIndex
+            );
+        }
+
+        function bookmarkVideo(videoIndex) {
+            const bookmarks = getItemBookmarks();
+            const existingIndex = bookmarks.findIndex(b => 
+                b.lessonId === currentLessonData.id && 
+                b.type === 'video' && 
+                b.index === videoIndex
+            );
+            
+            if (existingIndex > -1) {
+                bookmarks.splice(existingIndex, 1);
+            } else {
+                const video = currentLessonData.videos[videoIndex];
+                bookmarks.push({
+                    lessonId: currentLessonData.id,
+                    lessonName: currentLessonData.name,
+                    type: 'video',
+                    index: videoIndex,
+                    title: video.title || `Video ${videoIndex + 1}`,
+                    timestamp: Date.now()
+                });
+            }
+            
+            saveItemBookmarks(bookmarks);
+            populateVideos(); // Refresh to update bookmark display
+        }
+
+        function bookmarkQuiz(quizIndex) {
+            const bookmarks = getItemBookmarks();
+            const existingIndex = bookmarks.findIndex(b => 
+                b.lessonId === currentLessonData.id && 
+                b.type === 'quiz' && 
+                b.index === quizIndex
+            );
+            
+            if (existingIndex > -1) {
+                bookmarks.splice(existingIndex, 1);
+            } else {
+                const quiz = currentLessonData.quizzes[quizIndex];
+                bookmarks.push({
+                    lessonId: currentLessonData.id,
+                    lessonName: currentLessonData.name,
+                    type: 'quiz',
+                    index: quizIndex,
+                    title: quiz.title || `Practice Quiz ${quizIndex + 1}`,
+                    timestamp: Date.now()
+                });
+            }
+            
+            saveItemBookmarks(bookmarks);
+            populateQuizzes(); // Refresh to update bookmark display
         }
 
         function toggleVideoCompletion(index) {
