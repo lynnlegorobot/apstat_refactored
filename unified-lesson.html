@@ -595,7 +595,7 @@
     <!-- Error State -->
     <div class="error" id="errorState" style="display: none;">
         <strong>Error:</strong> <span id="errorMessage">Something went wrong.</span><br><br>
-        <a href="ap-stats-real-data.html" style="color: white; text-decoration: underline;">Return to Main App</a>
+                    <a href="index.html" style="color: white; text-decoration: underline;">Return to Main App</a>
     </div>
 
     <!-- Keyboard Help -->
@@ -955,10 +955,10 @@
             const params = getUrlParams();
             if (params.mobile) {
                 // Mobile user - go back to main app
-                window.location.href = 'ap-stats-real-data.html';
+                window.location.href = 'index.html';
             } else {
                 // Desktop user - go back to lesson selector (construct URL)
-                const lessonSelectUrl = `ap-stats-real-data.html?unit=${params.unit}&showLessons=true`;
+                const lessonSelectUrl = `index.html?unit=${params.unit}&showLessons=true`;
                 window.location.href = lessonSelectUrl;
             }
         }
