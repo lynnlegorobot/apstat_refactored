@@ -746,63 +746,7 @@
         </div>
     </div>
 
-    <!-- Full Lesson Experience Screen -->
-    <div class="lesson-experience" id="lessonExperience">
-        <div class="lesson-header">
-            <button class="lesson-back-btn" onclick="backToLessonPath()">← BACK TO LESSONS</button>
-            <div class="lesson-info">
-                <h1 class="lesson-main-title" id="lessonMainTitle">Topic 1.1</h1>
-                <p class="lesson-main-description" id="lessonMainDescription">Loading...</p>
-            </div>
-            <div class="lesson-progress-badge" id="lessonProgressBadge">1/3</div>
-        </div>
 
-        <div class="lesson-content">
-            <!-- Video Section -->
-            <div class="lesson-section video-section" id="videoSection">
-                <div class="section-header">
-                    <div class="section-icon">🎥</div>
-                    <h2 class="section-title">Watch Videos</h2>
-                    <div class="section-status" id="videoStatus">0/1 completed</div>
-                </div>
-                <div class="section-content" id="videoContent">
-                    <!-- Will be populated by JavaScript -->
-                </div>
-            </div>
-
-            <!-- Quiz Section -->
-            <div class="lesson-section quiz-section" id="quizSection">
-                <div class="section-header">
-                    <div class="section-icon">📄</div>
-                    <h2 class="section-title">Practice Quizzes</h2>
-                    <div class="section-status" id="quizStatus">0/1 completed</div>
-                </div>
-                <div class="section-content" id="quizContent">
-                    <!-- Will be populated by JavaScript -->
-                </div>
-            </div>
-
-            <!-- Completion Section -->
-            <div class="lesson-section completion-section" id="completionSection">
-                <div class="section-header">
-                    <div class="section-icon">✅</div>
-                    <h2 class="section-title">Mark Complete</h2>
-                    <div class="section-status" id="completionStatus">Ready</div>
-                </div>
-                <div class="section-content">
-                    <div class="completion-card">
-                        <div class="completion-message">
-                            <h3>Great work! Ready to complete this lesson?</h3>
-                            <p>Make sure you've watched all videos and attempted the practice quizzes.</p>
-                        </div>
-                        <button class="completion-btn" id="completionBtn" onclick="completeLessonFromInterface()">
-                            🎯 Complete Lesson
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- QR Code Overlay -->
     <div class="qr-overlay" id="qrOverlay">
@@ -1069,31 +1013,12 @@
             openLessonExperience(topic);
         }
 
-        // Open the full lesson experience
+        // Open the unified lesson experience
         function openLessonExperience(topic) {
-            currentLessonData = topic;
-            
-            // Load lesson progress from storage
-            const savedProgress = localStorage.getItem(`lesson_progress_${topic.id}`);
-            if (savedProgress) {
-                currentLessonProgress = JSON.parse(savedProgress);
-            } else {
-                currentLessonProgress = {
-                    videosWatched: [],
-                    quizzesCompleted: [],
-                    lessonCompleted: topic.completed || false
-                };
-            }
-
-            // Hide other screens
-            document.getElementById('unitSelector').style.display = 'none';
-            document.getElementById('lessonSelector').classList.remove('active');
-            
-            // Show lesson experience
-            document.getElementById('lessonExperience').classList.add('active');
-            
-            // Populate lesson interface
-            populateLessonInterface();
+            // Navigate to unified lesson experience
+            const baseUrl = window.location.origin + window.location.pathname.replace('ap-stats-real-data.html', 'unified-lesson.html');
+            const lessonUrl = baseUrl + `?lesson=${topic.id}&unit=${currentUnit.unitId}`;
+            window.location.href = lessonUrl;
         }
 
         // Populate the lesson interface with real data
@@ -1404,8 +1329,8 @@
             title.textContent = 'Scan for Mobile Access';
             subtitle.textContent = `${topic.name}: ${topic.description}`;
             
-            // Create mobile lesson URL
-            const baseUrl = window.location.origin + window.location.pathname.replace('ap-stats-real-data.html', 'mobile-lesson.html');
+            // Create unified lesson URL
+            const baseUrl = window.location.origin + window.location.pathname.replace('ap-stats-real-data.html', 'unified-lesson.html');
             const mobileUrl = baseUrl + `?mobile=true&lesson=${topic.id}&unit=${currentUnit.unitId}`;
             
             console.log('Generated mobile URL:', mobileUrl);
