@@ -1239,7 +1239,10 @@
             const isOnLessonScreen = lessonSelector.classList.contains('active');
             const isOnUnitScreen = unitSelector.style.display !== 'none';
             
-            if (e.key === 'ArrowUp' && isOnLessonScreen) {
+            if (e.key === 'Escape' && isOnLessonScreen) {
+                e.preventDefault();
+                backToUnits();
+            } else if (e.key === 'ArrowUp' && isOnLessonScreen) {
                 backToUnits();
             } else if (isOnLessonScreen) {
                 handleLessonNavigation(e);
@@ -1309,6 +1312,13 @@
             document.getElementById('lessonSelector').classList.remove('active');
             document.getElementById('unitSelector').style.display = 'block';
             setTimeout(updateSelectedUnit, 100);
+        }
+
+        // Handle escape key in lesson selector to go back to units
+        function handleLessonSelectorEscape() {
+            if (document.getElementById('lessonSelector').classList.contains('active')) {
+                backToUnits();
+            }
         }
 
         // QR Code Functions
@@ -1463,6 +1473,20 @@
             generateUnitsGrid();
             calculateNextDeadline();
             updateSelectedUnit();
+            
+            // Check URL parameters for direct navigation
+            const urlParams = new URLSearchParams(window.location.search);
+            const unitParam = urlParams.get('unit');
+            const showLessons = urlParams.get('showLessons');
+            
+            if (unitParam && showLessons === 'true') {
+                // Navigate directly to lesson selector for specified unit
+                const unitIndex = unitsData.findIndex(u => u.unitId === unitParam);
+                if (unitIndex >= 0) {
+                    currentUnitIndex = unitIndex;
+                    selectUnit(unitIndex);
+                }
+            }
         });
     </script>
 </body>

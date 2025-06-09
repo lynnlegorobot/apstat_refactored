@@ -18,8 +18,9 @@
             padding: 20px;
         }
 
-        /* Progressive Header Colors */
+        /* Clean Header (PICO PARK green) */
         .lesson-header {
+            background: linear-gradient(135deg, #2d5a2d, #1b5e20);
             color: white;
             padding: 20px;
             border-radius: 15px;
@@ -30,19 +31,6 @@
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 15px;
-            transition: background 0.5s ease;
-        }
-
-        .lesson-header.not-started {
-            background: linear-gradient(135deg, #d32f2f, #b71c1c);
-        }
-
-        .lesson-header.in-progress {
-            background: linear-gradient(135deg, #f57c00, #ef6c00);
-        }
-
-        .lesson-header.completed {
-            background: linear-gradient(135deg, #2d5a2d, #1b5e20);
         }
 
         .lesson-back-btn {
@@ -139,6 +127,25 @@
         .lesson-section.focused {
             border-color: #2196F3;
             box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.3);
+        }
+
+        .lesson-section.locked {
+            opacity: 0.5;
+            border-color: #ccc;
+            pointer-events: none;
+        }
+
+        .lesson-section.locked .section-header {
+            background: linear-gradient(135deg, #e0e0e0, #bdbdbd);
+        }
+
+        .lesson-section.locked .section-title {
+            color: #666;
+        }
+
+        .lesson-section.locked .section-status {
+            background: #f5f5f5;
+            color: #999;
         }
 
         .section-header {
@@ -675,32 +682,52 @@
         function updateInterface() {
             const progress = calculateProgress();
             
-            // Update header color
-            const header = document.getElementById('lessonHeader');
-            header.className = `lesson-header ${progress.percentage === 0 ? 'not-started' : progress.percentage === 100 ? 'completed' : 'in-progress'}`;
-            
             // Update progress badge
             document.getElementById('lessonProgressBadge').textContent = `${progress.completed}/${progress.total}`;
             
-            // Update status displays
+            // Sequential progression logic
             const videos = currentLessonData.videos || [];
             const quizzes = currentLessonData.quizzes || [];
-            document.getElementById('videoStatus').textContent = `${currentLessonProgress.videosWatched.length}/${videos.length} completed`;
-            document.getElementById('quizStatus').textContent = `${currentLessonProgress.quizzesCompleted.length}/${quizzes.length} completed`;
+            const allVideosWatched = videos.length === 0 || currentLessonProgress.videosWatched.length === videos.length;
+            const allQuizzesCompleted = quizzes.length === 0 || currentLessonProgress.quizzesCompleted.length === quizzes.length;
             
-            // Update completion button
+            // Update video section
+            document.getElementById('videoStatus').textContent = `${currentLessonProgress.videosWatched.length}/${videos.length} completed`;
+            
+            // Update quiz section - lock until videos are watched
+            const quizSection = document.getElementById('quizSection');
+            if (allVideosWatched) {
+                quizSection.classList.remove('locked');
+                document.getElementById('quizStatus').textContent = `${currentLessonProgress.quizzesCompleted.length}/${quizzes.length} completed`;
+            } else {
+                quizSection.classList.add('locked');
+                document.getElementById('quizStatus').textContent = 'Complete videos first';
+            }
+            
+            // Update completion section - lock until quizzes are completed
+            const completionSection = document.getElementById('completionSection');
             const btn = document.getElementById('completionBtn');
             const status = document.getElementById('completionStatus');
-            if (currentLessonProgress.lessonCompleted) {
-                btn.textContent = '✅ Lesson Complete';
-                status.textContent = 'Completed';
-                status.style.background = '#4CAF50';
-                status.style.color = 'white';
+            
+            if (!allVideosWatched || !allQuizzesCompleted) {
+                completionSection.classList.add('locked');
+                btn.textContent = '🔒 Complete Prerequisites';
+                status.textContent = 'Locked';
+                status.style.background = '#f5f5f5';
+                status.style.color = '#999';
             } else {
-                btn.textContent = '🎯 Complete Lesson';
-                status.textContent = 'Ready';
-                status.style.background = '#e3f2fd';
-                status.style.color = '#1976d2';
+                completionSection.classList.remove('locked');
+                if (currentLessonProgress.lessonCompleted) {
+                    btn.textContent = '✅ Lesson Complete';
+                    status.textContent = 'Completed';
+                    status.style.background = '#4CAF50';
+                    status.style.color = 'white';
+                } else {
+                    btn.textContent = '🎯 Complete Lesson';
+                    status.textContent = 'Ready';
+                    status.style.background = '#e3f2fd';
+                    status.style.color = '#1976d2';
+                }
             }
             
             // Update bookmark
@@ -814,7 +841,14 @@
 
         function goBack() {
             const params = getUrlParams();
-            window.location.href = params.mobile ? 'ap-stats-real-data.html' : 'ap-stats-real-data.html';
+            if (params.mobile) {
+                // Mobile user - go back to main app
+                window.location.href = 'ap-stats-real-data.html';
+            } else {
+                // Desktop user - go back to lesson selector (construct URL)
+                const lessonSelectUrl = `ap-stats-real-data.html?unit=${params.unit}&showLessons=true`;
+                window.location.href = lessonSelectUrl;
+            }
         }
 
         function showInterface() {
@@ -869,6 +903,30 @@
             
             const sections = ['videoSection', 'quizSection', 'completionSection'];
             const currentSectionEl = document.getElementById(sections[currentSection]);
+            
+            // Skip locked sections
+            if (currentSectionEl.classList.contains('locked')) {
+                // Move to next available section
+                if (currentSection === 1) { // Quiz section locked, move to completion if available
+                    const completionEl = document.getElementById('completionSection');
+                    if (!completionEl.classList.contains('locked')) {
+                        currentSection = 2;
+                        currentItem = 0;
+                        currentSubItem = 0;
+                    } else {
+                        currentSection = 0; // Go back to videos
+                        currentItem = 0;
+                        currentSubItem = 0;
+                    }
+                } else if (currentSection === 2) { // Completion locked, go back to videos
+                    currentSection = 0;
+                    currentItem = 0;
+                    currentSubItem = 0;
+                }
+                updateFocus(); // Recursive call to focus on available section
+                return;
+            }
+            
             currentSectionEl.classList.add('focused');
             currentSectionEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
             
