@@ -76,6 +76,26 @@
             display: block;
         }
 
+        .bookmark-button.keyboard-focused {
+            border-color: #FFD54F !important;
+            color: #FFD54F !important;
+            background: rgba(255, 213, 79, 0.2) !important;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 0 0 3px rgba(255, 213, 79, 0.6);
+        }
+
+        /* Lesson selector header */
+        .lesson-selector-header {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .lesson-bookmark {
+            position: absolute;
+            top: 0;
+            right: 20px;
+        }
+
         /* Unit selector screen */
         .unit-selector {
             padding: 40px 20px;
@@ -749,7 +769,7 @@
     <script src="js/allUnitsData.js"></script>
 
     <!-- Header -->
-    <div class="game-header">
+    <div class="game-header" id="gameHeader">
         <button class="bookmark-button" id="bookmarkButton" onclick="goToBookmark()">
             ★ GO TO BOOKMARK
         </button>
@@ -772,7 +792,12 @@
 
     <!-- Lesson Selector Screen -->
     <div class="lesson-selector" id="lessonSelector">
-        <button class="back-button" onclick="backToUnits()">← UNITS</button>
+        <div class="lesson-selector-header">
+            <button class="back-button" onclick="backToUnits()">← UNITS</button>
+            <button class="bookmark-button lesson-bookmark" id="lessonBookmarkButton" onclick="goToBookmark()">
+                ★ GO TO BOOKMARK
+            </button>
+        </div>
         
         <h2 class="world-title" id="unitTitle">SELECT LESSON</h2>
         
@@ -880,6 +905,41 @@
                 }
             } else {
                 bookmarkBtn.classList.remove('show');
+            }
+        }
+
+        function updateLessonBookmarkButton() {
+            const lessonBookmarkBtn = document.getElementById('lessonBookmarkButton');
+            const bookmark = checkBookmarkExists();
+            
+            if (bookmark) {
+                lessonBookmarkBtn.classList.add('show');
+                if (bookmark.type === 'lesson') {
+                    const lessonNumber = bookmark.id.replace('unit', '').replace('-', '.');
+                    lessonBookmarkBtn.innerHTML = `★ ${lessonNumber} LESSON`;
+                } else {
+                    const itemData = bookmark.data;
+                    const lessonNumber = itemData.lessonId.replace('unit', '').replace('-', '.');
+                    
+                    let description = '';
+                    if (itemData.type === 'video') {
+                        if (itemData.title && itemData.title.toLowerCase().includes('alt')) {
+                            description = 'ALTERNATE VIDEO';
+                        } else {
+                            description = 'VIDEO';
+                        }
+                    } else if (itemData.type === 'quiz') {
+                        if (itemData.title && itemData.title.toLowerCase().includes('answer')) {
+                            description = 'QUIZ ANSWERS';
+                        } else {
+                            description = 'QUIZ';
+                        }
+                    }
+                    
+                    lessonBookmarkBtn.innerHTML = `★ ${lessonNumber} ${description}`;
+                }
+            } else {
+                lessonBookmarkBtn.classList.remove('show');
             }
         }
 
@@ -1062,9 +1122,17 @@
             
             if (!currentUnit.isUnlocked) return;
             
+            // Reset focus to main content when entering lesson selector
+            currentFocus = 'main';
+            
+            // Hide main header and unit selector
+            document.getElementById('gameHeader').style.display = 'none';
             document.getElementById('unitSelector').style.display = 'none';
             document.getElementById('lessonSelector').classList.add('active');
             document.getElementById('unitTitle').textContent = currentUnit.displayName;
+            
+            // Update lesson bookmark button
+            updateLessonBookmarkButton();
             
             generateLessonPath();
             
@@ -1363,6 +1431,9 @@
             currentLessonData = null;
         }
 
+        // Focus management for keyboard navigation
+        let currentFocus = 'main'; // 'main' or 'bookmark'
+
         // Keyboard navigation
         document.addEventListener('keydown', function(e) {
             const lessonSelector = document.getElementById('lessonSelector');
@@ -1372,8 +1443,7 @@
             
             if (e.key === 'Escape' && isOnLessonScreen) {
                 e.preventDefault();
-                backToUnits();
-            } else if (e.key === 'ArrowUp' && isOnLessonScreen) {
+                currentFocus = 'main'; // Reset focus when going back
                 backToUnits();
             } else if (isOnLessonScreen) {
                 handleLessonNavigation(e);
@@ -1384,39 +1454,81 @@
 
         function handleUnitNavigation(e) {
             const unlockedUnits = unitsData.filter(u => u.isUnlocked).length;
+            const bookmarkBtn = document.getElementById('bookmarkButton');
+            const hasBookmark = bookmarkBtn && bookmarkBtn.classList.contains('show');
             
-            if (e.key === 'ArrowRight') {
-                if (currentUnitIndex < unlockedUnits - 1) {
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (hasBookmark && currentFocus === 'main') {
+                    currentFocus = 'bookmark';
+                    updateUnitFocus();
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (currentFocus === 'bookmark') {
+                    currentFocus = 'main';
+                    updateUnitFocus();
+                }
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                if (currentFocus === 'main' && currentUnitIndex < unlockedUnits - 1) {
                     currentUnitIndex++;
                     updateSelectedUnit();
                 }
             } else if (e.key === 'ArrowLeft') {
-                if (currentUnitIndex > 0) {
+                e.preventDefault();
+                if (currentFocus === 'main' && currentUnitIndex > 0) {
                     currentUnitIndex--;
                     updateSelectedUnit();
                 }
             } else if (e.key === 'Enter' || e.key === ' ') {
-                selectUnit(currentUnitIndex);
+                e.preventDefault();
+                if (currentFocus === 'bookmark' && hasBookmark) {
+                    goToBookmark();
+                } else if (currentFocus === 'main') {
+                    selectUnit(currentUnitIndex);
+                }
             }
         }
 
         function handleLessonNavigation(e) {
             const unlockedLessons = currentUnit.topics.filter((_, index) => isLessonUnlocked(index)).length;
+            const lessonBookmarkBtn = document.getElementById('lessonBookmarkButton');
+            const hasBookmark = lessonBookmarkBtn && lessonBookmarkBtn.classList.contains('show');
             
-            if (e.key === 'ArrowRight') {
-                if (currentLessonIndex < unlockedLessons - 1) {
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (hasBookmark && currentFocus === 'main') {
+                    currentFocus = 'bookmark';
+                    updateLessonFocus();
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (currentFocus === 'bookmark') {
+                    currentFocus = 'main';
+                    updateLessonFocus();
+                }
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                if (currentFocus === 'main' && currentLessonIndex < unlockedLessons - 1) {
                     currentLessonIndex++;
                     updateSelectedLesson();
                 }
             } else if (e.key === 'ArrowLeft') {
-                if (currentLessonIndex > 0) {
+                e.preventDefault();
+                if (currentFocus === 'main' && currentLessonIndex > 0) {
                     currentLessonIndex--;
                     updateSelectedLesson();
                 }
             } else if (e.key === 'Enter' || e.key === ' ') {
-                const availableTopics = currentUnit.topics.filter((_, index) => isLessonUnlocked(index));
-                if (availableTopics[currentLessonIndex]) {
-                    selectLesson(availableTopics[currentLessonIndex].id);
+                e.preventDefault();
+                if (currentFocus === 'bookmark' && hasBookmark) {
+                    goToBookmark();
+                } else if (currentFocus === 'main') {
+                    const availableTopics = currentUnit.topics.filter((_, index) => isLessonUnlocked(index));
+                    if (availableTopics[currentLessonIndex]) {
+                        selectLesson(availableTopics[currentLessonIndex].id);
+                    }
                 }
             }
         }
@@ -1430,6 +1542,23 @@
             }
         }
 
+        function updateUnitFocus() {
+            const bookmarkBtn = document.getElementById('bookmarkButton');
+            const unitBoxes = document.querySelectorAll('.unit-box');
+            
+            // Remove all focus styles
+            unitBoxes.forEach(box => box.classList.remove('selected'));
+            if (bookmarkBtn) bookmarkBtn.classList.remove('keyboard-focused');
+            
+            if (currentFocus === 'bookmark' && bookmarkBtn && bookmarkBtn.classList.contains('show')) {
+                bookmarkBtn.classList.add('keyboard-focused');
+                bookmarkBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                currentFocus = 'main';
+                updateSelectedUnit();
+            }
+        }
+
         function updateSelectedLesson() {
             document.querySelectorAll('.lesson-box').forEach(box => box.classList.remove('selected'));
             const lessonBoxes = document.querySelectorAll('.lesson-box:not(.locked)');
@@ -1439,18 +1568,40 @@
             }
         }
 
+        function updateLessonFocus() {
+            const lessonBookmarkBtn = document.getElementById('lessonBookmarkButton');
+            const lessonBoxes = document.querySelectorAll('.lesson-box');
+            
+            // Remove all focus styles
+            lessonBoxes.forEach(box => box.classList.remove('selected'));
+            if (lessonBookmarkBtn) lessonBookmarkBtn.classList.remove('keyboard-focused');
+            
+            if (currentFocus === 'bookmark' && lessonBookmarkBtn && lessonBookmarkBtn.classList.contains('show')) {
+                lessonBookmarkBtn.classList.add('keyboard-focused');
+                lessonBookmarkBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                currentFocus = 'main';
+                updateSelectedLesson();
+            }
+        }
+
         function backToUnits() {
+            // Reset focus to main content when returning to unit selector
+            currentFocus = 'main';
+            
+            // Show main header again
+            document.getElementById('gameHeader').style.display = 'block';
             document.getElementById('lessonSelector').classList.remove('active');
             document.getElementById('unitSelector').style.display = 'block';
             setTimeout(updateSelectedUnit, 100);
         }
 
-        // Handle escape key in lesson selector to go back to units
-        function handleLessonSelectorEscape() {
-            if (document.getElementById('lessonSelector').classList.contains('active')) {
-                backToUnits();
-            }
-        }
+        // Keyboard navigation pattern:
+        // - Up: Focus bookmark button (if available)
+        // - Down: Focus back to main content  
+        // - Left/Right: Navigate within main content
+        // - Enter/Space: Execute current focus
+        // - Escape: Go back to previous screen
 
         // QR Code Functions
         function showQRCode(topic) {
