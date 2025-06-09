@@ -280,9 +280,15 @@
         }
 
         .item-bookmark-btn.bookmarked {
-            background: none;
-            color: #FFD54F;
-            border-color: #FFD54F;
+            background: none !important;
+            color: #FFD54F !important;
+            border-color: #FFD54F !important;
+        }
+
+        .item-bookmark-btn.bookmarked:hover, .item-bookmark-btn.bookmarked:focus {
+            background: none !important;
+            color: #FFD54F !important;
+            border-color: #FFD54F !important;
         }
 
         /* Quiz Items */
@@ -666,7 +672,7 @@
                         <button class="video-completion-toggle" onclick="toggleVideoCompletion(${index})">
                             ${isWatched ? '■' : '□'}
                         </button>
-                        <button class="item-bookmark-btn" onclick="bookmarkVideo(${index})" title="Bookmark this video">
+                        <button class="item-bookmark-btn ${isVideoBookmarked(index) ? 'bookmarked' : ''}" onclick="bookmarkVideo(${index})" title="Bookmark this video">
                             ${isVideoBookmarked(index) ? '★' : '☆'}
                         </button>
                         <div class="video-title">${video.title || `Video ${index + 1}`}</div>
@@ -696,7 +702,7 @@
                         <button class="quiz-completion-toggle" onclick="toggleQuizCompletion(${index})">
                             ${isCompleted ? '■' : '□'}
                         </button>
-                        <button class="item-bookmark-btn" onclick="bookmarkQuiz(${index})" title="Bookmark this quiz">
+                        <button class="item-bookmark-btn ${isQuizBookmarked(index) ? 'bookmarked' : ''}" onclick="bookmarkQuiz(${index})" title="Bookmark this quiz">
                             ${isQuizBookmarked(index) ? '★' : '☆'}
                         </button>
                         <div class="quiz-title">${quiz.title || `Practice Quiz ${index + 1}`}</div>
